@@ -16,6 +16,9 @@ import { Navbar } from './components/Navbar';
 import { Preloader } from './components/Preloader';
 import { StickyCTA } from './components/StickyCTA';
 import { Engagement } from './components/Engagement';
+import { BTS } from './components/BTS';
+import { CaseStudies } from './components/CaseStudies';
+import { LeadMagnet } from './components/LeadMagnet';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -52,30 +55,39 @@ export default function App() {
           
           {/* 3. The Validation */}
           <Works />
+
+          {/* 4. The Engineering (Technical Expertise) */}
+          <VisualEngineering />
+
+          {/* 5. The Breakdown (NEW: BTS) */}
+          <BTS />
           
-          {/* 4. The Service (Technical Expertise) - Moved Up */}
+          {/* 6. The Strategy (NEW: Case Studies) */}
+          <CaseStudies />
+          
+          {/* 7. The Workflow Architecture */}
+          <Process />
+
+          {/* 8. The Expertise (Specific Services) */}
           <Services />
           
-          {/* 5. The "Wow" Factor */}
-          <VisualEngineering />
-          
-          {/* 6. The Trust (Workflow Architecture) */}
-          <Process />
-          
-          {/* 7. The Engagement Models (How to Hire) */}
+          {/* 9. The Engagement Models */}
           <Engagement />
+
+          {/* 10. The Lead Magnet (NEW) */}
+          <LeadMagnet />
           
-          {/* 8. The Connection (The Architect) */}
+          {/* 11. The Connection (The Architect) */}
           <About />
           
-          {/* Social Proof & Validation */}
+          {/* 12. Social Proof & Validation */}
           <Testimonials />
           
-          {/* 9. The Arsenal (Tech Stack) */}
+          {/* 13. The Arsenal (Tech Stack) */}
           <Tools />
         </main>
         
-        {/* 10. The Action */}
+        {/* 14. The Action */}
         <Footer />
       </motion.div>
     </>

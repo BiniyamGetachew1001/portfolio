@@ -1,187 +1,146 @@
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Repeat, Crown, ArrowRight, Check, Crosshair, Target } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Zap, Repeat, Crown, ArrowRight, CheckCircle2, ShieldCheck, Cpu } from 'lucide-react';
 
 const models = [
   {
     id: '01',
-    title: 'THE SPRINT',
+    name: 'THE SPRINT',
     subtitle: 'Tactical Deployment',
     icon: Zap,
-    scope: 'Rapid production for high-impact deliverables. We execute specific assets with precision speed.',
-    targets: ['Music Videos', 'Ad Spots', 'Thumbnails'],
-    details: '48-72h Turnaround',
-    highlight: false
+    description: 'High-velocity production for specific, high-impact deliverables. Perfect for tight deadlines.',
+    features: ['48-72h Turnaround', 'Single Asset Focus', 'Unlimited Revisions', 'Direct Slack Access'],
+    price: 'Fixed Per Asset',
+    color: 'from-blue-500/20 to-transparent',
+    accent: 'blue-500'
   },
   {
     id: '02',
-    title: 'THE CAMPAIGN',
+    name: 'THE CAMPAIGN',
     subtitle: 'Strategic Narrative',
     icon: Repeat,
-    scope: 'Comprehensive narrative structuring. We build cohesive visual systems across multiple deliverables.',
-    targets: ['Product Launches', 'Doc Series', 'Brand Awareness'],
-    details: 'Multi-Asset Delivery',
-    highlight: false
+    description: 'A comprehensive visual system across multiple formats. We build a cohesive brand story.',
+    features: ['Multi-Asset Delivery', 'Content Strategy', 'Project Management', 'Cloud Review Pipeline'],
+    price: 'Project Based',
+    color: 'from-violet-500/20 to-transparent',
+    accent: 'violet-500',
+    popular: true
   },
   {
     id: '03',
-    title: 'THE PARTNER',
-    subtitle: 'Full Spectrum Retainer',
+    name: 'THE PARTNER',
+    subtitle: 'Divisional Retainer',
     icon: Crown,
-    scope: 'Your dedicated post-production division. Priority queue, Slack integration, and monthly asset systems.',
-    targets: ['YouTubers', 'Agencies', 'Global Brands'],
-    details: 'Dedicated Pipeline',
-    highlight: true
+    description: 'I become your dedicated post-production department. Priority queue and systemic integration.',
+    features: ['Priority Asset Queue', 'Daily Communication', 'Storage & Archival', 'Strategic Consulting'],
+    price: 'Monthly Retainer',
+    color: 'from-amber-600/20 to-transparent',
+    accent: 'amber-600'
   }
 ];
 
-const AccordionItem: React.FC<{ 
-  model: typeof models[0]; 
-  isOpen: boolean; 
-  onClick: () => void; 
-}> = ({ model, isOpen, onClick }) => {
-  return (
-    <motion.div 
-      className={`relative border-b border-white/10 overflow-hidden group transition-all duration-500 ${
-        isOpen ? 'bg-gradient-to-r from-violet-900/10 via-black to-black' : 'hover:bg-white/5 bg-transparent'
-      } ${model.highlight ? 'border-l-[2px] border-l-violet-500' : 'border-l-[2px] border-l-transparent'}`}
-      onClick={onClick}
-    >
-      {/* "Limited" Badge for Partner */}
-      {model.highlight && (
-        <div className="absolute top-4 left-4 md:left-8 px-2 py-0.5 bg-violet-600/20 border border-violet-500/50 rounded text-[10px] font-mono text-violet-400 tracking-widest uppercase">
-          Limited Availability
-        </div>
-      )}
-
-      {/* Header (Always Visible) */}
-      <div className="relative flex items-center justify-between py-8 md:py-12 px-4 md:px-8 cursor-pointer z-20">
-        <div className="flex flex-col gap-1">
-          <motion.h3 
-            className={`font-display text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight transition-colors duration-300 ${
-              isOpen ? 'text-white' : 'text-gray-600 group-hover:text-white'
-            }`}
-          >
-            {model.title}
-          </motion.h3>
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: isOpen ? 1 : 0, height: isOpen ? 'auto' : 0 }}
-            className="font-mono text-violet-400 text-xs md:text-sm tracking-widest uppercase"
-          >
-            // {model.subtitle}
-          </motion.div>
-        </div>
-
-        {/* Big Number */}
-        <div className={`font-display text-6xl md:text-8xl font-bold transition-all duration-500 ${
-          isOpen 
-            ? 'text-white opacity-20 translate-x-0' 
-            : 'text-stroke text-transparent opacity-20 group-hover:opacity-40 translate-x-4 group-hover:translate-x-0'
-        }`}>
-          {model.id}
-        </div>
-      </div>
-
-      {/* Expanded Content */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className="px-4 md:px-8 pb-12 pt-4 border-t border-white/5">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-                
-                {/* Col 1: Scope */}
-                <div className="md:col-span-5">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Crosshair size={16} className="text-violet-500" />
-                    <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Mission Scope</span>
-                  </div>
-                  <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                    {model.scope}
-                  </p>
-                </div>
-
-                {/* Col 2: Targets */}
-                <div className="md:col-span-4">
-                   <div className="flex items-center gap-2 mb-4">
-                    <Target size={16} className="text-violet-500" />
-                    <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Ideal Targets</span>
-                  </div>
-                  <div className="flex flex-col gap-3">
-                    {model.targets.map(target => (
-                      <div key={target} className="flex items-center gap-3 text-sm text-gray-400">
-                        <div className="w-1 h-1 bg-gray-600 rounded-full" />
-                        {target}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Col 3: Action */}
-                <div className="md:col-span-3 flex flex-col justify-end">
-                  <button className="group relative w-full py-4 bg-white text-black font-mono text-xs font-bold uppercase tracking-widest hover:bg-violet-500 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden">
-                    <span className="relative z-10">Initialize</span>
-                    <ArrowRight size={14} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                  <div className="mt-3 text-center">
-                    <span className="font-mono text-[10px] text-gray-600 uppercase">
-                      Protocol: {model.details}
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Active Glow Effect */}
-      {isOpen && (
-        <motion.div 
-          layoutId="glow"
-          className="absolute inset-0 bg-gradient-to-r from-violet-600/5 to-transparent pointer-events-none"
-        />
-      )}
-    </motion.div>
-  );
-};
-
 export const Engagement: React.FC = () => {
-  const [expandedId, setExpandedId] = useState<string | null>('02');
-
   return (
-    <section className="w-full bg-[#030303] py-32 relative z-10 border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-4">
-        
-        {/* Section Header */}
-        <div className="mb-16 md:mb-24 pl-4 border-l border-white/20">
-           <h2 className="font-mono text-violet-400 text-xs tracking-widest uppercase mb-2">
-              Partnership Protocols
-           </h2>
-           <div className="font-display text-3xl md:text-4xl font-bold text-white uppercase">
-              Select Engagement Model
-           </div>
+    <section id="engagement" className="w-full bg-black py-32 px-4 relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="font-mono text-[10px] text-violet-500 tracking-[0.4em] uppercase mb-4 block">Engagement Protocols</span>
+            <h2 className="font-display text-4xl md:text-7xl font-bold text-white uppercase italic">
+                Choose Your <span className="text-stroke text-transparent">Velocity</span>
+            </h2>
+          </motion.div>
         </div>
 
-        {/* Accordion Stack */}
-        <div className="flex flex-col border-t border-white/10">
-          {models.map((model) => (
-            <AccordionItem 
-              key={model.id} 
-              model={model} 
-              isOpen={expandedId === model.id} 
-              onClick={() => setExpandedId(expandedId === model.id ? null : model.id)} 
-            />
+        {/* Pricing/Engagement Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {models.map((model, index) => (
+            <motion.div
+              key={model.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className={`relative group bg-[#080808] border border-white/5 rounded-[2rem] p-8 md:p-10 flex flex-col h-full transition-all duration-500 hover:border-${model.accent}/30 overflow-hidden shadow-2xl`}
+            >
+              {/* Highlight Glow */}
+              <div className={`absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b ${model.color} opacity-20 group-hover:opacity-40 transition-opacity pointer-events-none`} />
+              
+              {/* Popular Badge */}
+              {model.popular && (
+                <div className="absolute top-6 right-6 px-3 py-1 bg-violet-600 text-white font-mono text-[9px] font-bold uppercase tracking-widest rounded-full shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+                    Most Strategic
+                </div>
+              )}
+
+              {/* ID & Icon */}
+              <div className="relative z-10 flex items-center justify-between mb-12">
+                 <div className={`w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:bg-${model.accent} transition-colors duration-500`}>
+                    <model.icon size={28} />
+                 </div>
+                 <span className="font-display text-4xl font-bold text-white/[0.05] group-hover:text-white/10 transition-colors">
+                    {model.id}
+                 </span>
+              </div>
+
+              {/* Content */}
+              <div className="relative z-10 space-y-2 mb-8">
+                <span className={`font-mono text-[10px] text-${model.accent} uppercase tracking-widest font-bold`}>{model.subtitle}</span>
+                <h3 className="font-display text-3xl font-bold text-white uppercase tracking-tight">{model.name}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed pt-2">
+                    {model.description}
+                </p>
+              </div>
+
+              {/* Features */}
+              <div className="relative z-10 flex-1 space-y-4 mb-10">
+                 {model.features.map((feature) => (
+                    <div key={feature} className="flex items-center gap-3">
+                        <CheckCircle2 size={14} className={`text-${model.accent}/60`} />
+                        <span className="text-xs font-mono text-gray-400 group-hover:text-gray-200 transition-colors">{feature}</span>
+                    </div>
+                 ))}
+              </div>
+
+              {/* Action Area */}
+              <div className="relative z-10 pt-8 border-t border-white/5 mt-auto">
+                 <div className="flex items-center justify-between mb-6">
+                    <span className="font-mono text-[10px] text-gray-500 uppercase">Protocol Cost</span>
+                    <span className="font-display text-xl text-white uppercase">{model.price}</span>
+                 </div>
+                 
+                 <button className={`w-full py-4 rounded-xl border border-white/10 bg-white/5 text-white font-mono text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center gap-2 group/btn`}>
+                    Initialize Engagement
+                    <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                 </button>
+              </div>
+
+              {/* Decorative Corner Mark */}
+              <div className={`absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-${model.accent}/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity`} />
+            </motion.div>
           ))}
         </div>
 
+        {/* Bottom Metadata */}
+        <div className="mt-20 flex flex-wrap justify-center gap-8 md:gap-16">
+            <div className="flex items-center gap-3">
+                <ShieldCheck size={18} className="text-gray-600" />
+                <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Encrypted Metadata</span>
+            </div>
+            <div className="flex items-center gap-3">
+                <Cpu size={18} className="text-gray-600" />
+                <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Global CDN Delivery</span>
+            </div>
+        </div>
       </div>
     </section>
   );

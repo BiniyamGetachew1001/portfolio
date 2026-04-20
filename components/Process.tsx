@@ -1,179 +1,139 @@
+
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { Search, PenTool, Activity, Zap, Package, Radio } from 'lucide-react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { Search, Package, Activity, Zap, PenTool, PlayCircle } from 'lucide-react';
 
 const steps = [
-  { id: '01', title: 'Discovery', desc: 'Deconstructing the creative brief & story objectives.', icon: Search },
-  { id: '02', title: 'Assembly', desc: 'Raw footage breakdown & narrative skeleton.', icon: Package },
-  { id: '03', title: 'Rhythm', desc: 'Pacing, flow, and retention optimization.', icon: Activity },
-  { id: '04', title: 'Alchemy', desc: 'Motion graphics, color grading & sound design.', icon: Zap },
-  { id: '05', title: 'Delivery', desc: 'Final polish & format optimization.', icon: PenTool },
+  { 
+    id: '01', 
+    title: 'INGESTION & DECONSTRUCTION', 
+    desc: 'Deep deconstruction of raw assets. We identify the narrative core and emotional beats before the first cut.',
+    icon: Search,
+    detail: '4K RAW // LOG Analysis'
+  },
+  { 
+    id: '02', 
+    title: 'THE ASSEMBLY SKELETON', 
+    desc: 'Building the narrative foundation. Framing the story rhythm without the distraction of effects.',
+    icon: Package,
+    detail: 'Narrative Flow // Pacing'
+  },
+  { 
+    id: '03', 
+    title: 'KINETIC RHYTHM', 
+    desc: 'Injecting energy. Frame-perfect synchronization between visual velocity and auditory impact.',
+    icon: Activity,
+    detail: 'Frame-Sync // Momentum'
+  },
+  { 
+    id: '04', 
+    title: 'COLOR & VFX ALCHEMY', 
+    desc: 'Technical artistry. Atmospheric grading and seamless visual effects integration.',
+    icon: Zap,
+    detail: 'ACES // Node-Based'
+  },
+  { 
+    id: '05', 
+    title: 'FINAL MASTERING', 
+    desc: 'The elite finish. Metadata optimization and multi-platform delivery standards.',
+    icon: PenTool,
+    detail: '4K HDR // ProRES 4444'
+  },
 ];
 
-const TimelineCard: React.FC<{ step: typeof steps[0]; index: number }> = ({ step, index }) => {
-  const isEven = index % 2 === 0;
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { margin: "-40% 0px -40% 0px", once: false });
+export const Process: React.FC = () => {
+  const targetRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
+
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
+  const springX = useSpring(x, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   return (
-    <div 
-      ref={cardRef}
-      className={`relative flex items-center justify-between md:justify-center w-full mb-24 last:mb-0 ${
-        isEven ? 'md:flex-row-reverse' : ''
-      }`}
-    >
-        {/* Empty Half for Grid Alignment (Desktop) */}
-        <div className="hidden md:block w-5/12" />
-
-        {/* Center Node on the Line */}
-        <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center z-20">
-            <motion.div
-                animate={{ 
-                  scale: isInView ? 1 : 0, 
-                  backgroundColor: isInView ? "#8b5cf6" : "#1a1a1a",
-                  borderColor: isInView ? "#8b5cf6" : "#333"
-                }}
-                className="w-4 h-4 rounded-full border-2 shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-colors duration-500"
-            >
-              {isInView && (
-                 <motion.div 
-                   className="absolute inset-0 rounded-full bg-violet-500"
-                   animate={{ scale: [1, 2], opacity: [0.5, 0] }}
-                   transition={{ duration: 1.5, repeat: Infinity }}
-                 />
-              )}
-            </motion.div>
+    <section ref={targetRef} className="relative h-[400vh] bg-[#030303]">
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+        
+        {/* Section Background Label */}
+        <div className="absolute top-12 left-12 flex items-center gap-4">
+           <div className="w-2 h-2 bg-violet-500 rounded-full animate-pulse" />
+           <span className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.3em]">System // Workflow_V2.0</span>
         </div>
 
-        {/* The Card */}
-        <motion.div
-            className={`w-[calc(100%-4rem)] md:w-5/12 ml-16 md:ml-0 p-1`}
-            initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-20%" }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-        >
-            <motion.div
-              animate={{
-                 opacity: isInView ? 1 : 0.3,
-                 filter: isInView ? 'grayscale(0%)' : 'grayscale(100%)',
-                 scale: isInView ? 1 : 0.95,
-                 borderColor: isInView ? 'rgba(139, 92, 246, 0.5)' : 'rgba(255, 255, 255, 0.05)'
-              }}
-              whileHover={{ 
-                scale: 1.05, 
-                borderColor: '#8b5cf6',
-                opacity: 1,
-                filter: 'grayscale(0%)'
-              }}
-              transition={{ duration: 0.3 }}
-              className="relative p-6 md:p-8 rounded-2xl bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/5 overflow-hidden group cursor-default"
-            >
-                {/* Background Noise Texture */}
-                <div className="absolute inset-0 opacity-[0.15] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
-                
-                {/* Background Number */}
-                <div className="absolute -right-2 -bottom-6 font-display font-bold text-8xl md:text-9xl text-white/[0.02] z-0 select-none group-hover:text-violet-500/[0.05] transition-colors duration-500 text-stroke">
+        {/* The "Timeline" Header */}
+        <div className="absolute top-1/4 left-12 z-20">
+            <h2 className="font-display text-5xl md:text-8xl font-bold text-white uppercase leading-none italic">
+                Workflow <br /> <span className="text-stroke text-transparent">Architecture</span>
+            </h2>
+        </div>
+
+        {/* Progress Tape (NLE Style) */}
+        <div className="absolute bottom-24 left-0 w-full h-16 border-t border-b border-white/5 bg-black/40 backdrop-blur-sm z-30 flex items-center px-12">
+            <div className="flex items-center gap-8 w-full">
+                <div className="font-mono text-[10px] text-violet-500 font-bold whitespace-nowrap">TIMELINE // MASTER</div>
+                <div className="flex-1 h-[1px] bg-white/10 relative">
+                    <motion.div 
+                        style={{ scaleX: scrollYProgress }}
+                        className="absolute inset-0 bg-violet-600 origin-left shadow-[0_0_15px_rgba(139,92,246,0.5)]" 
+                    />
+                    {/* Playhead */}
+                    <motion.div 
+                        style={{ left: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]) }}
+                        className="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-violet-600 rounded-sm rotate-45 z-10"
+                    />
+                </div>
+                <div className="font-mono text-[10px] text-gray-500">00:00:24:12</div>
+            </div>
+        </div>
+
+        {/* Horizontal Moving Cards */}
+        <div className="relative flex items-center px-12 md:px-[40vw]">
+          <motion.div style={{ x: springX }} className="flex gap-12 md:gap-32">
+            {steps.map((step, index) => (
+              <div 
+                key={step.id} 
+                className="relative w-[85vw] md:w-[600px] flex-shrink-0"
+              >
+                {/* Large Background ID */}
+                <div className="absolute -top-12 -left-8 font-display text-[12rem] md:text-[20rem] font-bold text-white/[0.03] select-none pointer-events-none">
                     {step.id}
                 </div>
 
-                {/* Content Container */}
-                <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className={`p-3 rounded-xl bg-violet-500/10 text-violet-400 group-hover:text-white group-hover:bg-violet-500 transition-all duration-300 ${isInView ? 'animate-pulse-slow' : ''}`}>
-                            <step.icon size={24} />
+                <div className="relative z-10 p-8 md:p-12 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl group hover:border-violet-500/50 transition-colors duration-500">
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="p-4 rounded-xl bg-violet-600/20 text-violet-400 group-hover:bg-violet-600 group-hover:text-white transition-all">
+                            <step.icon size={32} />
                         </div>
-                        <Radio size={16} className={`text-violet-500 ${isInView ? 'opacity-100 animate-pulse' : 'opacity-0'}`} />
+                        <div className="font-mono text-[10px] text-gray-500 tracking-widest">{step.detail}</div>
                     </div>
 
-                    <h3 className={`font-display text-xl md:text-2xl mb-2 transition-colors duration-300 ${isInView ? 'text-white' : 'text-gray-500'}`}>
+                    <h3 className="font-display text-2xl md:text-4xl font-bold text-white uppercase mb-6 tracking-tight group-hover:text-violet-400 transition-colors">
                         {step.title}
                     </h3>
                     
-                    <p className="font-mono text-xs md:text-sm text-gray-400 group-hover:text-gray-300 transition-colors leading-relaxed">
+                    <p className="font-mono text-xs md:text-sm text-gray-400 leading-relaxed mb-8 max-w-md">
                         {step.desc}
                     </p>
+
+                    <div className="flex items-center gap-3 py-4 border-t border-white/5">
+                        <PlayCircle size={14} className="text-violet-500" />
+                        <span className="font-mono text-[9px] text-gray-600 uppercase tracking-widest">Protocol Verified // 100% Locked</span>
+                    </div>
                 </div>
 
-                {/* Active Beam Gradient Inside Card */}
-                {isInView && (
-                  <motion.div 
-                    layoutId="active-glow"
-                    className="absolute inset-0 bg-gradient-to-tr from-violet-500/10 via-transparent to-transparent pointer-events-none" 
-                  />
+                {/* Vertical Connector Path */}
+                {index < steps.length - 1 && (
+                    <div className="hidden md:block absolute top-1/2 -right-24 w-16 h-[1px] bg-gradient-to-r from-violet-500 to-transparent opacity-30" />
                 )}
-            </motion.div>
-        </motion.div>
-    </div>
-  );
-};
-
-export const Process: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start center", "end center"]
-  });
-
-  const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
-  return (
-    <section ref={containerRef} className="w-full bg-[#030303] py-32 px-4 relative overflow-hidden">
-        {/* Background Grid */}
-        <div 
-          className="absolute inset-0 opacity-[0.03] pointer-events-none"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '32px 32px'
-          }}
-        />
-
-        <div className="max-w-7xl mx-auto relative">
-             {/* Header */}
-            <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-24 md:mb-32 relative z-10"
-            >
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-4 backdrop-blur-md">
-                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                   <span className="font-mono text-[10px] text-gray-400 uppercase tracking-widest">System Boot Sequence</span>
-                </div>
-                <h2 className="font-display text-4xl md:text-7xl font-bold uppercase tracking-tight text-white mb-2">
-                    Workflow <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-fuchsia-500">Architecture</span>
-                </h2>
-            </motion.div>
-
-            <div className="relative">
-                {/* Center Timeline Track (Background) */}
-                <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-white/5 -translate-x-1/2 rounded-full" />
-
-                {/* Active Beam (Foreground) */}
-                <motion.div
-                    style={{ height }}
-                    className="absolute left-8 md:left-1/2 top-0 w-[2px] bg-gradient-to-b from-violet-500 via-fuchsia-500 to-violet-500 -translate-x-1/2 shadow-[0_0_15px_rgba(139,92,246,0.6)] z-10 rounded-full"
-                />
-
-                {/* Beam Head (Leading Edge) */}
-                <motion.div 
-                    style={{ top: height }}
-                    className="absolute left-8 md:left-1/2 -translate-x-1/2 w-4 h-12 bg-gradient-to-b from-transparent to-violet-500 blur-sm z-10 -translate-y-full"
-                />
-
-                {/* Steps */}
-                <div className="relative z-20 pb-24">
-                    {steps.map((step, index) => (
-                        <TimelineCard key={step.id} step={step} index={index} />
-                    ))}
-                </div>
-            </div>
-            
-            {/* Bottom Connector */}
-            <div className="flex justify-center mt-[-6rem] relative z-20">
-                <div className="w-3 h-3 bg-white/10 rounded-full border border-white/20" />
-            </div>
+              </div>
+            ))}
+          </motion.div>
         </div>
+
+      </div>
+
+      {/* Background Decorative Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-violet-900/5 via-transparent to-transparent pointer-events-none" />
     </section>
   );
 };
