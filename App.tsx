@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Hero } from './components/Hero';
 import { Showreel } from './components/Showreel';
-import { Works } from './components/Works';
 import { Process } from './components/Process';
 import { VisualEngineering } from './components/ColorGradeSlider';
 import { Services } from './components/Services';
@@ -53,41 +52,38 @@ export default function App() {
           {/* 2. The Proof */}
           <Showreel />
           
-          {/* 3. The Validation */}
-          <Works />
-
-          {/* 4. The Engineering (Technical Expertise) */}
+          {/* 3. The Engineering (Technical Expertise) */}
           <VisualEngineering />
 
-          {/* 5. The Breakdown (NEW: BTS) */}
+          {/* 4. The Breakdown (BTS) */}
           <BTS />
           
-          {/* 6. The Strategy (NEW: Case Studies) */}
+          {/* 5. The Strategy (Case Studies) */}
           <CaseStudies />
           
-          {/* 7. The Workflow Architecture */}
+          {/* 6. The Workflow Architecture */}
           <Process />
 
-          {/* 8. The Expertise (Specific Services) */}
+          {/* 7. The Expertise (Specific Services) */}
           <Services />
           
-          {/* 9. The Engagement Models */}
+          {/* 8. The Engagement Models */}
           <Engagement />
 
-          {/* 10. The Lead Magnet (NEW) */}
+          {/* 9. The Lead Magnet */}
           <LeadMagnet />
           
-          {/* 11. The Connection (The Architect) */}
+          {/* 10. The Connection (The Architect) */}
           <About />
           
-          {/* 12. Social Proof & Validation */}
+          {/* 11. Social Proof & Validation */}
           <Testimonials />
           
-          {/* 13. The Arsenal (Tech Stack) */}
+          {/* 12. The Arsenal (Tech Stack) */}
           <Tools />
         </main>
         
-        {/* 14. The Action */}
+        {/* 13. The Action */}
         <Footer />
       </motion.div>
     </>
