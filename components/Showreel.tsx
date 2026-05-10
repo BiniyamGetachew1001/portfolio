@@ -1,13 +1,41 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { Captions, Gauge, Play, Smartphone, Sparkles } from 'lucide-react';
+
+const shortFormClips = [
+  {
+    title: 'Hook Cut',
+    format: '0-3s retention',
+    metric: '92%',
+    image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=900&auto=format&fit=crop',
+    accent: 'from-violet-500 to-fuchsia-500'
+  },
+  {
+    title: 'Caption Flow',
+    format: 'Kinetic subtitles',
+    metric: '4.8x',
+    image: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=900&auto=format&fit=crop',
+    accent: 'from-cyan-400 to-blue-500'
+  },
+  {
+    title: 'Sales Reel',
+    format: 'CTA sequence',
+    metric: '38s',
+    image: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=900&auto=format&fit=crop',
+    accent: 'from-amber-300 to-red-500'
+  }
+];
 
 export const Showreel: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { amount: 0.5 });
 
   return (
-    <section ref={containerRef} className="relative w-full h-[80vh] md:h-screen flex items-center justify-center bg-black py-20">
+    <section
+      id="work"
+      ref={containerRef}
+      className="relative w-full min-h-screen flex items-center justify-center bg-black py-24 md:py-32 overflow-hidden"
+    >
       
       {/* Ambient background glow when active */}
       <motion.div 
@@ -55,6 +83,97 @@ export const Showreel: React.FC = () => {
                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
               </div>
             </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-16 items-center"
+        >
+          <div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
+              <Smartphone size={14} className="text-violet-400" />
+              <span className="font-mono text-[10px] md:text-xs text-gray-400 uppercase tracking-wider">
+                Short Form Editing Showreel
+              </span>
+            </div>
+
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold uppercase leading-none text-white">
+              Built For The <span className="text-stroke text-transparent">First Scroll</span>
+            </h2>
+
+            <p className="mt-6 max-w-xl font-mono text-sm md:text-base text-gray-400 leading-relaxed">
+              Fast hooks, caption rhythm, sound-led cuts, and platform-ready versions for Reels, Shorts, and TikTok.
+            </p>
+
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {[
+                { icon: Gauge, label: 'Pacing', value: 'Pattern interrupts' },
+                { icon: Captions, label: 'Captions', value: 'Readable motion' },
+                { icon: Sparkles, label: 'Polish', value: 'Grade + sound' }
+              ].map((item) => (
+                <div key={item.label} className="border border-white/10 bg-white/[0.03] px-4 py-4 rounded-lg">
+                  <item.icon size={16} className="text-violet-400 mb-3" />
+                  <div className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">
+                    {item.label}
+                  </div>
+                  <div className="mt-1 text-sm text-white">
+                    {item.value}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3 sm:gap-5">
+            {shortFormClips.map((clip, index) => (
+              <motion.div
+                key={clip.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: index === 1 ? 28 : 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.12, ease: 'easeOut' }}
+                className="group relative aspect-[9/16] overflow-hidden rounded-lg border border-white/10 bg-[#0a0a0a]"
+              >
+                <img
+                  src={clip.image}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover grayscale opacity-60 transition-all duration-700 group-hover:grayscale-0 group-hover:opacity-90 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
+                <div className={`absolute left-0 top-0 h-1 w-full bg-gradient-to-r ${clip.accent}`} />
+
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                  <span className="font-mono text-[9px] text-white/70 uppercase tracking-widest">
+                    9:16
+                  </span>
+                  <span className="font-mono text-[9px] text-white/80 bg-black/40 border border-white/10 px-2 py-1 rounded-full">
+                    {clip.metric}
+                  </span>
+                </div>
+
+                <div className="absolute inset-x-3 bottom-3">
+                  <div className="mb-3 h-1 bg-white/10 rounded-full overflow-hidden">
+                    <motion.div
+                      className={`h-full bg-gradient-to-r ${clip.accent}`}
+                      initial={{ width: '18%' }}
+                      whileInView={{ width: `${52 + index * 16}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, delay: 0.25 + index * 0.15 }}
+                    />
+                  </div>
+                  <h3 className="font-display text-lg sm:text-xl md:text-2xl text-white uppercase leading-none">
+                    {clip.title}
+                  </h3>
+                  <p className="mt-1 font-mono text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-widest">
+                    {clip.format}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>

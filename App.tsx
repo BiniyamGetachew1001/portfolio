@@ -18,6 +18,7 @@ import { Engagement } from './components/Engagement';
 import { BTS } from './components/BTS';
 import { CaseStudies } from './components/CaseStudies';
 import { LeadMagnet } from './components/LeadMagnet';
+import { FitCheck } from './components/FitCheck';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -51,6 +52,9 @@ export default function App() {
           
           {/* 2. The Proof */}
           <Showreel />
+
+          {/* 2.5 The Filter (Qualified Leads) */}
+          <FitCheck />
           
           {/* 3. The Engineering (Technical Expertise) */}
           <VisualEngineering />
