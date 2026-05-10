@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Play, Zap, Smartphone, Sparkles, TrendingUp } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Play, Zap, Smartphone, TrendingUp } from 'lucide-react';
 
 const clips = [
   {
@@ -33,21 +33,17 @@ const clips = [
   }
 ];
 
-const VerticalFrame = ({ clip, index }: { clip: any, index: number }) => {
+const VerticalFrame = ({ clip }: { clip: any }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 100 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+    <div
       onMouseEnter={() => videoRef.current?.play()}
       onMouseLeave={() => {
         videoRef.current?.pause();
         if (videoRef.current) videoRef.current.currentTime = 0;
       }}
-      className="relative aspect-[9/16] w-full md:w-80 rounded-[2rem] overflow-hidden border border-white/10 group cursor-none"
+      className="relative aspect-[9/16] w-64 md:w-80 shrink-0 rounded-[2rem] overflow-hidden border border-white/10 group cursor-none mx-4"
       data-cursor-text="PLAY"
     >
       <video
@@ -75,40 +71,25 @@ const VerticalFrame = ({ clip, index }: { clip: any, index: number }) => {
         <h3 className="font-display text-2xl text-white font-bold uppercase italic leading-none">{clip.title}</h3>
       </div>
 
-      {/* Play Icon (Visible on hover) */}
+      {/* Play Icon */}
       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
         <div className="w-16 h-16 rounded-full border border-white/20 backdrop-blur-sm flex items-center justify-center bg-white/5">
           <Play className="fill-white text-white translate-x-0.5" size={20} />
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 export const PremiumShowreel: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  // Duplicate clips for seamless loop
+  const loopClips = [...clips, ...clips, ...clips];
 
   return (
-    <section id="work" ref={containerRef} className="w-full bg-black py-40 relative overflow-hidden">
-      {/* Background Parallax Text */}
-      <motion.div 
-        style={{ x }}
-        className="absolute top-1/2 left-0 -translate-y-1/2 whitespace-nowrap pointer-events-none z-0 opacity-[0.03]"
-      >
-        <span className="font-display text-[20vw] font-bold text-white uppercase italic tracking-tighter">
-          RETENTION BY DESIGN // VISUAL IMPACT // 
-        </span>
-      </motion.div>
-
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+    <section id="work" className="w-full bg-black py-40 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 relative z-10 mb-24">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-6">
             <div className="flex items-center gap-2">
               <Zap size={14} className="text-violet-500" />
@@ -123,16 +104,32 @@ export const PremiumShowreel: React.FC = () => {
             High-velocity edits engineered for maximum retention. We turn attention into authority.
           </p>
         </div>
+      </div>
 
-        {/* Frames Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {clips.map((clip, index) => (
-            <VerticalFrame key={clip.id} clip={clip} index={index} />
+      {/* Horizontal Looping Marquee */}
+      <div className="flex w-full overflow-hidden relative py-10">
+        <motion.div 
+          animate={{ x: ["0%", "-33.33%"] }}
+          transition={{ 
+            duration: 30, 
+            repeat: Infinity, 
+            ease: "linear" 
+          }}
+          className="flex whitespace-nowrap"
+        >
+          {loopClips.map((clip, index) => (
+            <VerticalFrame key={`${clip.id}-${index}`} clip={clip} />
           ))}
-        </div>
+        </motion.div>
 
+        {/* Gradient Masks */}
+        <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 mt-24">
         {/* Bottom Metadata */}
-        <div className="mt-32 flex flex-wrap justify-between items-center pt-8 border-t border-white/10 opacity-30 font-mono text-[10px] uppercase tracking-widest">
+        <div className="flex flex-wrap justify-between items-center pt-8 border-t border-white/10 opacity-30 font-mono text-[10px] uppercase tracking-widest">
             <div className="flex items-center gap-4">
                 <span>9:16 Optimized</span>
                 <span>//</span>
