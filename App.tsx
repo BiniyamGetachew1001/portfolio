@@ -2,23 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Hero } from './components/Hero';
-import { Showreel } from './components/Showreel';
+import { PremiumShowreel } from './components/PremiumShowreel';
 import { Process } from './components/Process';
-import { VisualEngineering } from './components/ColorGradeSlider';
 import { Services } from './components/Services';
 import { About } from './components/About';
-import { Testimonials } from './components/Testimonials';
 import { Footer } from './components/Footer';
+import { LongFormShowreel } from './components/LongFormShowreel';
 import { Tools } from './components/Tools';
+import { Testimonials } from './components/Testimonials';
 import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
 import { Preloader } from './components/Preloader';
 import { StickyCTA } from './components/StickyCTA';
-import { Engagement } from './components/Engagement';
 import { BTS } from './components/BTS';
 import { CaseStudies } from './components/CaseStudies';
 import { LeadMagnet } from './components/LeadMagnet';
-import { FitCheck } from './components/FitCheck';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -50,17 +48,11 @@ export default function App() {
           {/* 1. The Hook */}
           <Hero />
           
-          {/* 2. The Proof */}
-          <Showreel />
+          {/* 3. The New Premium Showreel */}
+          <PremiumShowreel />
 
-          {/* 2.1 Social Proof */}
-          {/* Moved down per user request */}
-
-          {/* 2.5 The Filter (Qualified Leads) */}
-          <FitCheck />
-          
-          {/* 3. The Engineering (Technical Expertise) */}
-          <VisualEngineering />
+          {/* 3.1 Long Form Narrative Showcase */}
+          <LongFormShowreel />
 
           {/* 4. The Breakdown (BTS) */}
           <BTS />
@@ -74,16 +66,13 @@ export default function App() {
           {/* 7. The Expertise (Specific Services) */}
           <Services />
           
-          {/* 8. The Engagement Models */}
-          <Engagement />
-
           {/* 9. The Lead Magnet */}
           <LeadMagnet />
           
           {/* 10. The Connection (The Architect) */}
           <About />
 
-          {/* 11. Social Proof & Validation */}
+          {/* 11. Social Proof (Restored) */}
           <Testimonials />
           
           {/* 12. The Arsenal (Tech Stack) */}
