@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-black">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pricing | Biniyam Edits</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              black: '#030303',
+              'noir-black': '#050505',
+              'electric-violet': '#7F00FF',
+            },
+            fontFamily: {
+              sans: ['Syne', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+              display: ['Oswald', 'sans-serif'],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&family=Oswald:wght@500;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #030303; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        
+        body { cursor: none; background-color: #030303; color: white; }
+        a, button { cursor: none; }
+
+        .film-grain {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            opacity: 0.4;
+            mix-blend-mode: overlay;
+        }
+
+        .custom-cursor {
+            width: 12px;
+            height: 12px;
+            border: 1px solid white;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: difference;
+            transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), width 0.2s, height 0.2s, background-color 0.2s;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-cursor::after {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .custom-cursor.hover {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .custom-cursor.hover::after {
+            display: none;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .pricing-card:hover {
+            border-color: rgba(127, 0, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .glow-purple {
+            box-shadow: 0 0 30px rgba(127, 0, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden font-sans">
+    <div class="film-grain"></div>
+    <div id="cursor" class="custom-cursor"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center">
+        <div class="backdrop-blur-md bg-white/5 border border-white/10 rounded-full px-6 py-3 flex items-center gap-8 shadow-2xl">
+            <a href="/" class="font-display font-bold text-lg tracking-tight text-white">BE.</a>
+            <div class="hidden md:flex gap-6 font-mono text-[10px] text-gray-400">
+                <a href="/#work" class="hover:text-white transition-colors">WORK</a>
+                <a href="/pricing.html" class="text-white border-b border-white/20">PRICING</a>
+                <a href="/#about" class="hover:text-white transition-colors">ABOUT</a>
+            </div>
+            <a href="/#contact" class="bg-white text-black font-bold font-mono text-[10px] px-4 py-2 rounded-full hover:bg-gray-200 transition-colors">
+                LET'S TALK
+            </a>
+        </div>
+    </nav>
+
+    <!-- Pricing Hero -->
+    <section class="pt-40 pb-20 px-4 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto text-center">
+            <span class="font-mono text-[10px] text-electric-violet tracking-[0.5em] uppercase mb-6 block opacity-0 animate-[fadeIn_1s_ease_forwards]">Investment Protocols</span>
+            <h1 class="font-display text-6xl md:text-9xl font-bold uppercase italic leading-none mb-8">
+                SELECT YOUR <br/>
+                <span class="text-stroke">VELOCITY</span>
+            </h1>
+            <p class="font-mono text-xs text-gray-500 max-w-xl mx-auto uppercase tracking-widest leading-loose">
+                Premium high-end post-production engineered for creators who demand cinematic excellence and systemic growth.
+            </p>
+        </div>
+
+        <!-- Background Decor -->
+        <div class="absolute -top-20 -left-20 w-96 h-96 bg-electric-violet/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/2 -right-20 w-96 h-96 bg-electric-violet/5 rounded-full blur-[120px] pointer-events-none"></div>
+    </section>
+
+    <!-- Pricing Grid -->
+    <section class="pb-40 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Tier 1 -->
+            <div class="pricing-card rounded-[2.5rem] p-10 flex flex-col h-full">
+                <div class="mb-12">
+                    <span class="font-mono text-[10px] text-gray-500 uppercase tracking-widest block mb-2">Protocol: ALPHA</span>
+                    <h3 class="font-display text-4xl font-bold uppercase italic">The Hook</h3>
+                    <p class="text-gray-500 text-xs font-mono mt-4 leading-relaxed">Perfect for high-impact short-form drops that need to cut through the noise.</p>
+                </div>
+
+                <div class="mb-12 flex items-baseline gap-2">
+                    <span class="font-display text-5xl font-bold">$1,950</span>
+                    <span class="font-mono text-[10px] text-gray-600 uppercase">/ PROJECT</span>
+                </div>
+
+                <div class="flex-1 space-y-4 mb-12">
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-electric-violet"></div>
+                        <span class="font-mono text-[11px] text-gray-300 uppercase">3 Cinematic Reels / TikToks</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-electric-violet"></div>
+                        <span class="font-mono text-[11px] text-gray-300 uppercase">Advanced Sound Design</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-electric-violet"></div>
+                        <span class="font-mono text-[11px] text-gray-300 uppercase">Color Grade Mastery</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-gray-700"></div>
+                        <span class="font-mono text-[11px] text-gray-500 uppercase">48h Delivery Protocol</span>
+                    </div>
+                </div>
+
+                <button class="w-full py-5 bg-white/5 border border-white/10 rounded-2xl font-mono text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all">
+                    INITIALIZE ALPHA
+                </button>
+            </div>
+
+            <!-- Tier 2 (Most Popular) -->
+            <div class="pricing-card rounded-[2.5rem] p-10 flex flex-col h-full relative glow-purple border-electric-violet/30 bg-white/[0.05]">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-electric-violet text-white font-mono text-[9px] font-bold px-4 py-1.5 rounded-full uppercase tracking-widest">
+                    Most Requested
+                </div>
+                
+                <div class="mb-12">
+                    <span class="font-mono text-[10px] text-electric-violet uppercase tracking-widest block mb-2">Protocol: SIGMA</span>
+                    <h3 class="font-display text-4xl font-bold uppercase italic">The Engine</h3>
+                    <p class="text-gray-400 text-xs font-mono mt-4 leading-relaxed">A full-stack content engine. Consistent, high-end, and strategically engineered.</p>
+                </div>
+
+                <div class="mb-12 flex items-baseline gap-2">
+                    <span class="font-display text-5xl font-bold">$4,500</span>
+                    <span class="font-mono text-[10px] text-gray-600 uppercase">/ MONTH</span>
+                </div>
+
+                <div class="flex-1 space-y-4 mb-12">
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-electric-violet"></div>
+                        <span class="font-mono text-[11px] text-gray-200 uppercase">12 Cinematic Shorts / Mo</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-electric-violet"></div>
+                        <span class="font-mono text-[11px] text-gray-200 uppercase">Custom Brand Soundscape</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-electric-violet"></div>
+                        <span class="font-mono text-[11px] text-gray-200 uppercase">Strategic Content Audit</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-electric-violet"></div>
+                        <span class="font-mono text-[11px] text-gray-200 uppercase">Priority Queue Access</span>
+                    </div>
+                </div>
+
+                <button class="w-full py-5 bg-electric-violet text-white rounded-2xl font-mono text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(127,0,255,0.4)]">
+                    DEPLOY SIGMA
+                </button>
+            </div>
+
+            <!-- Tier 3 -->
+            <div class="pricing-card rounded-[2.5rem] p-10 flex flex-col h-full">
+                <div class="mb-12">
+                    <span class="font-mono text-[10px] text-gray-500 uppercase tracking-widest block mb-2">Protocol: OMEGA</span>
+                    <h3 class="font-display text-4xl font-bold uppercase italic">The Architect</h3>
+                    <p class="text-gray-500 text-xs font-mono mt-4 leading-relaxed">Your dedicated creative department. Total immersion in your brand's visual identity.</p>
+                </div>
+
+                <div class="mb-12 flex items-baseline gap-2">
+                    <span class="font-display text-5xl font-bold">$9,000</span>
+                    <span class="font-mono text-[10px] text-gray-600 uppercase">/ MONTH</span>
+                </div>
+
+                <div class="flex-1 space-y-4 mb-12">
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-electric-violet"></div>
+                        <span class="font-mono text-[11px] text-gray-300 uppercase">Unlimited Short Form Asset</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-electric-violet"></div>
+                        <span class="font-mono text-[11px] text-gray-300 uppercase">2 High-End Long Form / Mo</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-electric-violet"></div>
+                        <span class="font-mono text-[11px] text-gray-300 uppercase">Direct Creative Direction</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-1.5 h-1.5 rounded-full bg-electric-violet"></div>
+                        <span class="font-mono text-[11px] text-gray-300 uppercase">Asset Archival & Management</span>
+                    </div>
+                </div>
+
+                <button class="w-full py-5 bg-white/5 border border-white/10 rounded-2xl font-mono text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all">
+                    ENGAGE OMEGA
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer Meta -->
+    <footer class="pb-20 text-center">
+        <div class="max-w-4xl mx-auto border-t border-white/5 pt-10 px-4">
+            <p class="font-mono text-[9px] text-gray-600 uppercase tracking-widest leading-relaxed">
+                All prices in USD. Custom protocols available upon request. <br/>
+                © 2026 BINIYAM EDITS | SYSTEM VERSION 4.2.0
+            </p>
+        </div>
+    </footer>
+
+    <!-- Custom Cursor Script -->
+    <script>
+        const cursor = document.getElementById('cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</body>
+</html>

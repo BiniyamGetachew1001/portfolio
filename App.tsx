@@ -53,6 +53,9 @@ export default function App() {
           {/* 2. The Proof */}
           <Showreel />
 
+          {/* 2.1 Social Proof */}
+          {/* Moved down per user request */}
+
           {/* 2.5 The Filter (Qualified Leads) */}
           <FitCheck />
           
@@ -79,7 +82,7 @@ export default function App() {
           
           {/* 10. The Connection (The Architect) */}
           <About />
-          
+
           {/* 11. Social Proof & Validation */}
           <Testimonials />
           

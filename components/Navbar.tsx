@@ -14,6 +14,7 @@ export const Navbar: React.FC = () => {
         
         <div className="hidden md:flex gap-6 font-mono text-xs text-gray-300">
           <a href="#work" className="hover:text-white transition-colors">WORK</a>
+          <a href="/pricing.html" className="hover:text-white transition-colors">PRICING</a>
           <a href="#services" className="hover:text-white transition-colors">SERVICES</a>
           <a href="#about" className="hover:text-white transition-colors">ABOUT</a>
         </div>

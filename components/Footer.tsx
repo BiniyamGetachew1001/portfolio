@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Github, Twitter, Instagram, Linkedin, Mail, Globe } from 'lucide-react';
 
@@ -77,6 +77,12 @@ export const Footer: React.FC = () => {
               className="hover:text-gray-400 transition-colors"
             >
               TERMS
+            </a>
+            <a
+              href="/pricing.html"
+              className="hover:text-gray-400 transition-colors"
+            >
+              PRICING
             </a>
             <a
               href="#top"

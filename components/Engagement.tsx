@@ -118,10 +118,10 @@ export const Engagement: React.FC = () => {
                     <span className="font-display text-xl text-white uppercase">{model.price}</span>
                  </div>
                  
-                 <button className={`w-full py-4 rounded-xl border border-white/10 bg-white/5 text-white font-mono text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center gap-2 group/btn`}>
+                 <a href="/pricing.html" className={`w-full py-4 rounded-xl border border-white/10 bg-white/5 text-white font-mono text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center gap-2 group/btn`}>
                     Initialize Engagement
                     <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
-                 </button>
+                 </a>
               </div>
 
               {/* Decorative Corner Mark */}
