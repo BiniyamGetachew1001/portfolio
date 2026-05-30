@@ -1,53 +1,67 @@
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Play, Zap, Smartphone, TrendingUp } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Play, Smartphone, TrendingUp, X, Zap } from 'lucide-react';
 
-const clips = [
-  {
-    id: 1,
-    title: "Cinematic Flow",
-    views: "1.2M",
-    video: "https://videos.pexels.com/video-files/3205915/3205915-hd_1920_1080_25fps.mp4",
-    color: "bg-violet-600"
-  },
-  {
-    id: 2,
-    title: "Retention Hook",
-    views: "850K",
-    video: "https://videos.pexels.com/video-files/3163534/3163534-hd_1920_1080_30fps.mp4",
-    color: "bg-fuchsia-600"
-  },
-  {
-    id: 3,
-    title: "Visual Narrative",
-    views: "2.4M",
-    video: "https://videos.pexels.com/video-files/3205915/3205915-hd_1920_1080_25fps.mp4",
-    color: "bg-blue-600"
-  },
-  {
-    id: 4,
-    title: "Dynamic Grade",
-    views: "500K",
-    video: "https://videos.pexels.com/video-files/3163534/3163534-hd_1920_1080_30fps.mp4",
-    color: "bg-amber-500"
-  }
-];
+type Clip = {
+  id: number;
+  title: string;
+  views: string;
+  video: string;
+  color: string;
+};
 
-const VerticalFrame = ({ clip }: { clip: any }) => {
+const clipColors = ["bg-violet-600", "bg-fuchsia-600", "bg-blue-600", "bg-amber-500"];
+const clipLabels = ["Cinematic Flow", "Retention Hook", "Visual Narrative", "Dynamic Grade"];
+
+const videoModules = import.meta.glob(
+  '../Glowing Motion Graphics Reels Bundle-20260412T121753Z-3-002/Glowing Motion Graphics Reels Bundle/*.mp4',
+  { eager: true, query: '?url', import: 'default' }
+) as Record<string, string>;
+
+const getClipNumber = (path: string) => {
+  const match = path.match(/\((\d+)\)\.mp4$/);
+  return match ? Number(match[1]) : 0;
+};
+
+const clips: Clip[] = Object.entries(videoModules)
+  .sort(([a], [b]) => getClipNumber(a) - getClipNumber(b))
+  .map(([path, video], index) => ({
+    id: index + 1,
+    title: `${clipLabels[index % clipLabels.length]} ${String(index + 1).padStart(2, '0')}`,
+    views: "PLAY",
+    video,
+    color: clipColors[index % clipColors.length],
+  }));
+
+const VerticalFrame = ({ clip, onSelect }: { clip: Clip; onSelect: (clip: Clip) => void }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const playPreview = () => {
+    videoRef.current?.play();
+  };
+
+  const stopPreview = () => {
+    if (!videoRef.current) return;
+    videoRef.current.pause();
+    videoRef.current.currentTime = 0;
+  };
+
+  const openPlayer = () => {
+    stopPreview();
+    onSelect(clip);
+  };
 
   return (
     <div
-      onMouseEnter={() => videoRef.current?.play()}
-      onMouseLeave={() => {
-        videoRef.current?.pause();
-        if (videoRef.current) videoRef.current.currentTime = 0;
-      }}
+      onMouseEnter={playPreview}
+      onMouseLeave={stopPreview}
+      onClick={openPlayer}
       className="relative aspect-[9/16] w-64 md:w-80 shrink-0 rounded-[2rem] overflow-hidden border border-white/10 group cursor-none mx-4"
       data-cursor-text="PLAY"
     >
       <video
         ref={videoRef}
+        data-short-form-video="true"
         src={clip.video}
         loop
         muted
@@ -81,7 +95,72 @@ const VerticalFrame = ({ clip }: { clip: any }) => {
   );
 };
 
+const FocusedPlayer = ({ clip, onClose }: { clip: Clip; onClose: () => void }) => {
+  const playerRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    playerRef.current?.play();
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-xl px-4 py-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <motion.div
+        className="relative h-full max-h-[88vh] aspect-[9/16] overflow-hidden rounded-2xl border border-white/15 bg-black shadow-2xl"
+        initial={{ scale: 0.92, y: 30 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.96, y: 20 }}
+        transition={{ duration: 0.28, ease: 'easeOut' }}
+        onClick={(event) => event.stopPropagation()}
+      >
+        <video
+          ref={playerRef}
+          key={clip.video}
+          src={clip.video}
+          className="h-full w-full object-cover"
+          autoPlay
+          controls
+          playsInline
+        />
+
+        <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between bg-gradient-to-b from-black/80 to-transparent p-4">
+          <div>
+            <div className="font-mono text-[10px] text-white/50 uppercase tracking-widest">
+              Reel {clip.id.toString().padStart(2, '0')}
+            </div>
+            <div className="mt-1 font-display text-xl text-white font-bold uppercase italic leading-none">
+              {clip.title}
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          aria-label="Close focused video player"
+          onClick={onClose}
+          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/50 text-white backdrop-blur-md transition-colors hover:bg-white hover:text-black"
+        >
+          <X size={18} />
+        </button>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 export const PremiumShowreel: React.FC = () => {
+  const [selectedClip, setSelectedClip] = useState<Clip | null>(null);
   // Duplicate clips for seamless loop
   const loopClips = [...clips, ...clips, ...clips];
 
@@ -101,7 +180,7 @@ export const PremiumShowreel: React.FC = () => {
             </h2>
           </div>
           <p className="font-mono text-xs text-gray-500 max-w-xs uppercase tracking-widest leading-loose text-right">
-            High-velocity edits engineered for maximum retention. We turn attention into authority.
+            Browse the reel stream, then click any piece to lock it in place and watch with sound.
           </p>
         </div>
       </div>
@@ -111,14 +190,14 @@ export const PremiumShowreel: React.FC = () => {
         <motion.div 
           animate={{ x: ["0%", "-33.33%"] }}
           transition={{ 
-            duration: 30, 
+            duration: Math.max(260, clips.length * 5.5),
             repeat: Infinity, 
             ease: "linear" 
           }}
           className="flex whitespace-nowrap"
         >
           {loopClips.map((clip, index) => (
-            <VerticalFrame key={`${clip.id}-${index}`} clip={clip} />
+            <VerticalFrame key={`${clip.id}-${index}`} clip={clip} onSelect={setSelectedClip} />
           ))}
         </motion.div>
 
@@ -141,6 +220,15 @@ export const PremiumShowreel: React.FC = () => {
             </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedClip && (
+          <FocusedPlayer
+            clip={selectedClip}
+            onClose={() => setSelectedClip(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 };
