@@ -36,39 +36,58 @@ const clips: Clip[] = Object.entries(videoModules)
 const VerticalFrame = ({ clip, onSelect }: { clip: Clip; onSelect: (clip: Clip) => void }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const playPreview = () => {
-    videoRef.current?.play();
+  const playHoverPreview = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    document.querySelectorAll('video[data-short-form-video="true"]').forEach((item) => {
+      const otherVideo = item as HTMLVideoElement;
+      if (otherVideo !== video) otherVideo.muted = true;
+    });
+
+    video.muted = false;
+    video.volume = 0.85;
+
+    try {
+      await video.play();
+    } catch {
+      video.muted = true;
+      await video.play();
+    }
   };
 
-  const stopPreview = () => {
+  const resetHoverPreview = () => {
     if (!videoRef.current) return;
-    videoRef.current.pause();
-    videoRef.current.currentTime = 0;
+    videoRef.current.muted = true;
+    videoRef.current.volume = 0;
+    videoRef.current.play();
   };
 
   const openPlayer = () => {
-    stopPreview();
+    resetHoverPreview();
     onSelect(clip);
   };
 
   return (
     <div
-      onMouseEnter={playPreview}
-      onMouseLeave={stopPreview}
+      onMouseEnter={playHoverPreview}
+      onMouseLeave={resetHoverPreview}
       onClick={openPlayer}
-      className="relative aspect-[9/16] w-64 md:w-80 shrink-0 rounded-[2rem] overflow-hidden border border-white/10 group cursor-none mx-4"
+      className="relative aspect-[9/16] w-64 md:w-80 shrink-0 rounded-[2rem] overflow-hidden border border-white/10 group cursor-none mx-4 transition-all duration-500 ease-out hover:z-30 hover:scale-110 hover:border-white/35 hover:shadow-[0_24px_80px_rgba(0,0,0,0.65)]"
       data-cursor-text="PLAY"
     >
       <video
         ref={videoRef}
         data-short-form-video="true"
         src={clip.video}
+        autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+        preload="metadata"
+        className="absolute inset-0 w-full h-full object-cover grayscale-[35%] group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-40 transition-opacity" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-65 group-hover:opacity-30 transition-opacity" />
       
       {/* Metrics Badge */}
       <div className="absolute top-6 right-6 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center gap-2">
@@ -180,7 +199,7 @@ export const PremiumShowreel: React.FC = () => {
             </h2>
           </div>
           <p className="font-mono text-xs text-gray-500 max-w-xs uppercase tracking-widest leading-loose text-right">
-            Browse the reel stream, then click any piece to lock it in place and watch with sound.
+            A living archive of short-form edits. Every frame is in motion, ready to lock into a focused watch.
           </p>
         </div>
       </div>
