@@ -18,6 +18,16 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      build: {
+        rollupOptions: {
+          input: {
+            main: path.resolve(__dirname, 'index.html'),
+            pricing: path.resolve(__dirname, 'pricing.html'),
+            gallery: path.resolve(__dirname, 'gallery.html')
+          }
+        }
       }
     };
 });
+
