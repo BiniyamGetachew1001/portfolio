@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Biniyam Getachew Teka — CV</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+:root{
+  --font-display:'Bebas Neue','DejaVu Sans Condensed','Arial Narrow',sans-serif;
+  --font-body:'Inter','DejaVu Sans',sans-serif;
+  --font-mono:'DM Mono','DejaVu Sans Mono',monospace;
+}
+
+:root{
+  --bg:#0a0a0a;
+  --panel:#111113;
+  --accent:#ffb703;
+  --white:#ffffff;
+  --gray:#8a8a8e;
+  --line:#2a2a2c;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:var(--font-body);
+  width:210mm;
+  height:297mm;
+  margin:0 auto;
+  position:relative;
+  overflow:hidden;
+}
+
+/* grain overlay */
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:1;
+}
+
+/* faint waveform watermark */
+.waveform{
+  position:absolute;
+  bottom:8mm;
+  left:0;
+  width:100%;
+  height:30mm;
+  opacity:0.05;
+  z-index:0;
+  pointer-events:none;
+}
+
+.page{
+  position:relative;
+  z-index:2;
+  padding:16mm 16mm 12mm 16mm;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+}
+.body-grid{flex:1;}
+
+/* ===== HEADER ===== */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding-bottom:6mm;
+  border-bottom:1px solid var(--line);
+  position:relative;
+}
+
+.name-block{position:relative;flex:1;}
+
+.header-right{
+  text-align:right;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+  flex-shrink:0;
+  white-space:nowrap;
+  padding-left:10mm;
+}
+
+.name-glow{
+  position:absolute;
+  top:-30px;
+  left:-30px;
+  width:280px;
+  height:120px;
+  background:radial-gradient(circle, rgba(255,183,3,0.18), transparent 70%);
+  filter:blur(10px);
+  z-index:-1;
+}
+
+.name{
+  font-family:var(--font-display);
+  font-size:42px;
+  letter-spacing:3px;
+  line-height:1.05;
+  position:relative;
+  white-space:nowrap;
+}
+
+.subtitle{
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--gray);
+  margin-top:6px;
+  font-weight:500;
+}
+
+.header-right{
+  text-align:right;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+}
+
+.location{
+  font-size:11px;
+  color:var(--gray);
+  letter-spacing:0.5px;
+  font-family:var(--font-mono);
+}
+
+.badge{
+  display:inline-block;
+  border:1px solid var(--accent);
+  color:var(--accent);
+  font-size:9px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  padding:5px 12px;
+  border-radius:20px;
+  margin-top:4px;
+  font-weight:600;
+}
+
+/* ===== STATS BAR ===== */
+.stats{
+  display:flex;
+  justify-content:space-between;
+  padding:8mm 0;
+  border-bottom:1px solid var(--line);
+}
+
+.stat{
+  text-align:center;
+  flex:1;
+}
+
+.stat-num{
+  font-family:var(--font-display);
+  font-size:34px;
+  color:var(--accent);
+  letter-spacing:1px;
+}
+
+.stat-label{
+  font-size:8.5px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gray);
+  margin-top:2px;
+}
+
+/* ===== BODY GRID ===== */
+.body-grid{
+  margin-top:8mm;
+  overflow:hidden;
+}
+.left-col{width:35%;float:left;box-sizing:border-box;padding-right:5mm;}
+.right-col{width:65%;float:right;box-sizing:border-box;padding-left:5mm;border-left:1px solid var(--line);}
+
+.section-label{
+  font-size:9px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.section{margin-bottom:7mm;}
+
+/* skills */
+.skill-row{margin-bottom:9px;}
+.skill-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  font-size:11px;
+  margin-bottom:4px;
+  font-weight:500;
+}
+.skill-top span:first-child{flex:1;}
+.skill-pct{
+  font-family:var(--font-mono);
+  color:var(--accent);
+  font-size:10px;
+}
+.skill-bar{
+  width:100%;
+  height:3px;
+  background:var(--line);
+  border-radius:2px;
+  overflow:hidden;
+}
+.skill-fill{
+  height:100%;
+  background:var(--accent);
+  border-radius:2px;
+}
+
+/* services list */
+.services-list{display:flex;flex-direction:column;gap:7px;}
+.service-item{
+  font-size:11px;
+  line-height:1.5;
+  color:var(--gray);
+  padding-left:10px;
+  border-left:1px solid var(--accent);
+}
+.service-item strong{
+  display:block;
+  color:var(--white);
+  font-weight:600;
+  font-size:11px;
+  margin-bottom:1px;
+}
+
+/* software row */
+.software-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  font-size:9px;
+  font-family:var(--font-mono);
+  color:var(--gray);
+}
+.software-row span{
+  border:1px solid var(--line);
+  padding:3px 8px;
+  border-radius:3px;
+}
+
+/* contact */
+.contact-list{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  font-size:10px;
+  font-family:var(--font-mono);
+  color:var(--gray);
+}
+.contact-list a{color:var(--white);text-decoration:none;}
+
+/* right column */
+.summary{
+  font-size:12px;
+  line-height:1.7;
+  color:#d8d8da;
+  font-weight:300;
+}
+
+.exp-title{
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:2px;
+}
+.exp-meta{
+  font-size:9.5px;
+  color:var(--gray);
+  font-family:var(--font-mono);
+  letter-spacing:0.5px;
+  margin-bottom:8px;
+}
+.exp-list{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.exp-list li{
+  font-size:11px;
+  line-height:1.5;
+  color:#cfcfd2;
+  padding-left:14px;
+  position:relative;
+}
+.exp-list li::before{
+  content:"—";
+  position:absolute;
+  left:0;
+  color:var(--accent);
+}
+
+/* timeline */
+.timeline{
+  display:flex;
+  justify-content:space-between;
+  margin-top:6px;
+  position:relative;
+}
+.timeline::before{
+  content:"";
+  position:absolute;
+  top:6px;
+  left:0;
+  right:0;
+  height:1px;
+  background:var(--line);
+}
+.tl-item{
+  text-align:center;
+  position:relative;
+  flex:1;
+}
+.tl-dot{
+  width:7px;
+  height:7px;
+  background:var(--accent);
+  border-radius:50%;
+  margin:0 auto 8px;
+  position:relative;
+  z-index:1;
+}
+.tl-year{
+  font-family:var(--font-display);
+  font-size:15px;
+  letter-spacing:1px;
+}
+.tl-label{
+  font-size:8px;
+  color:var(--gray);
+  margin-top:3px;
+  line-height:1.4;
+  padding:0 4px;
+}
+
+/* pull quote */
+.pullquote{
+  margin-top:8mm;
+  padding:6mm 9mm;
+  border-left:2px solid var(--accent);
+  background:rgba(255,183,3,0.04);
+  position:relative;
+}
+.pullquote .q{
+  font-family:var(--font-display);
+  font-size:32px;
+  color:var(--accent);
+  line-height:0.6;
+  position:absolute;
+  top:8px;
+  left:8px;
+  opacity:0.5;
+}
+.pullquote-text{
+  font-size:14px;
+  font-style:italic;
+  font-weight:300;
+  line-height:1.5;
+  padding-left:6px;
+}
+.pullquote-source{
+  font-size:9px;
+  color:var(--gray);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-top:6px;
+  padding-left:6px;
+}
+
+/* footer */
+.footer{
+  margin-top:8mm;
+  padding-top:5mm;
+  border-top:1px solid var(--accent);
+  display:flex;
+  justify-content:space-between;
+  font-size:9.5px;
+  font-family:var(--font-mono);
+  color:var(--gray);
+}
+.footer a{color:var(--white);text-decoration:none;}
+.footer-links{display:inline-block;}
+.footer-links a{margin-left:14px;}
+
+@media print{
+  body{width:210mm;height:297mm;}
+}
+</style>
+</head>
+<body>
+
+<svg class="waveform" viewBox="0 0 800 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,50 L10,30 L20,70 L30,20 L40,80 L50,40 L60,60 L70,15 L80,85 L90,35 L100,55 L110,25 L120,75 L130,45 L140,65 L150,10 L160,90 L170,30 L180,70 L190,20 L200,50 L210,40 L220,60 L230,25 L240,75 L250,45 L260,55 L270,15 L280,85 L290,35 L300,65 L310,20 L320,80 L330,40 L340,60 L350,30 L360,70 L370,45 L380,55 L390,25 L400,75 L410,40 L420,60 L430,20 L440,80 L450,35 L460,65 L470,15 L480,85 L490,45 L500,55 L510,25 L520,75 L530,40 L540,60 L550,30 L560,70 L570,45 L580,55 L590,20 L600,80 L610,35 L620,65 L630,15 L640,85 L650,40 L660,60 L670,25 L680,75 L690,45 L700,55 L710,30 L720,70 L730,40 L740,60 L750,20 L760,80 L770,35 L780,65 L790,50 L800,50" stroke="#ffb703" stroke-width="1.5" fill="none"/>
+</svg>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="name-block">
+      <div class="name-glow"></div>
+      <div class="name">BINIYAM GETACHEW TEKA</div>
+      <div class="subtitle">Video Editor · Motion Designer · Post-Production Specialist</div>
+    </div>
+    <div class="header-right">
+      <div class="location">Addis Ababa, Ethiopia · UTC+3</div>
+      <div class="badge">Open to Remote Work</div>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats">
+    <div class="stat"><div class="stat-num">50M+</div><div class="stat-label">Total Views</div></div>
+    <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Projects Completed</div></div>
+    <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Client Rating</div></div>
+    <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Satisfaction Rate</div></div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body-grid">
+
+    <!-- LEFT COLUMN -->
+    <div class="left-col">
+
+      <div class="section">
+        <div class="section-label">Technical Skills</div>
+        <div class="skill-row">
+          <div class="skill-top"><span>Premiere Pro</span><span class="skill-pct">95%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-top"><span>After Effects</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-top"><span>DaVinci Resolve</span><span class="skill-pct">88%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-top"><span>Audition</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-top"><span>Photoshop</span><span class="skill-pct">82%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-top"><span>Cinema 4D</span><span class="skill-pct">75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Also Working In</div>
+        <div class="software-row">
+          <span>Blender</span><span>CapCut</span><span>Media Encoder</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Core Services</div>
+        <div class="services-list">
+          <div class="service-item">
+            <strong>Retention Engineering</strong>
+            Hook optimization, drop-off mapping & algorithm-driven pacing for short-form content.
+          </div>
+          <div class="service-item">
+            <strong>Long-Form Narrative</strong>
+            Story architecture, emotional pacing & chapter design for documentary-style series.
+          </div>
+          <div class="service-item">
+            <strong>Motion Graphics & VFX</strong>
+            Bespoke 2D/3D assets, kinetic typography & VFX compositing for brand identity.
+          </div>
+          <div class="service-item">
+            <strong>Color & Sound</strong>
+            10-bit DaVinci pipelines, custom LUTs, mixing, sound design & foley layering.
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Contact</div>
+        <div class="contact-list">
+          <span>biniyamedits.com</span>
+          <span>LinkedIn · Instagram · Twitter</span>
+          <span>Telegram · Email · Contact Form</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+
+      <div class="section">
+        <div class="section-label">Summary</div>
+        <div class="summary">
+          Results-driven video editor and motion designer with 4+ years delivering cinematic, algorithm-optimized content for brands, creators, and agencies worldwide — over 50M views across 200+ projects, combining technical mastery with a storyteller's intuition for retention, pacing, and color.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Experience</div>
+        <div class="exp-title">Freelance Video Editor & Motion Designer</div>
+        <div class="exp-meta">BINIYAM EDITS — ADDIS ABABA, ETHIOPIA · 2020 – PRESENT</div>
+        <ul class="exp-list">
+          <li>Completed 200+ projects across music videos, brand commercials, documentary series, and social content</li>
+          <li>Achieved a 92% average audience retention rate on short-form content through data-driven hook and pacing engineering</li>
+          <li>Generated 50M+ total views for clients across YouTube, TikTok, and Instagram</li>
+          <li>Maintained a 4.9/5 star rating across all client engagements, including 48–72 hour sprint deliveries</li>
+          <li>Developed bespoke 2D/3D motion graphics packages and custom color LUTs for recurring retainer clients</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Milestones</div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2020</div>
+            <div class="tl-label">Started professional freelancing</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2021</div>
+            <div class="tl-label">First viral video — 10M+ views</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2022</div>
+            <div class="tl-label">Partnered with top-tier agencies</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2023</div>
+            <div class="tl-label">Launched full production studio</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2024</div>
+            <div class="tl-label">Surpassed 50M cumulative views</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pullquote">
+        <div class="q">"</div>
+        <div class="pullquote-text">Finally found an editor who understands pacing.</div>
+        <div class="pullquote-source">— Client Testimonial</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>biniyamedits.com</span>
+    <div class="footer-links">
+      <a href="#">LinkedIn</a>
+      <a href="#">Telegram</a>
+      <a href="#">Portfolio</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
