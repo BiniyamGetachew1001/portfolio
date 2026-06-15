@@ -24,3 +24,10 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Video assets — host on Cloudflare R2/Bunny/S3, not git
+public/reels/
+Glowing Motion Graphics Reels Bundle-20260412T121753Z-3-002/
+
+# Graphify output
+graphify-out/

@@ -16,6 +16,7 @@ import { Navbar } from './components/Navbar';
 import { Preloader } from './components/Preloader';
 import { StickyCTA } from './components/StickyCTA';
 import { Engagement } from './components/Engagement';
+import { ShortFormReel } from './components/ShortFormReel';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -50,7 +51,10 @@ export default function App() {
           {/* 2. The Proof */}
           <Showreel />
 
-          {/* 3. The Validation */}
+          {/* 3. Short-Form Reel */}
+          <ShortFormReel />
+
+          {/* 4. The Validation */}
           <Works />
 
           {/* 4. The Service (Technical Expertise) - Moved Up */}
