@@ -64,6 +64,9 @@ const VIDEO_NAMES = [
 const ROW_A = VIDEO_NAMES.slice(0, 28);
 const ROW_B = VIDEO_NAMES.slice(28);
 
+// In dev, serve from local public/reels/. In production, use the CDN.
+const CDN_BASE = (import.meta.env.VITE_REELS_CDN_URL ?? '/reels').replace(/\/$/, '');
+
 // --- Lightbox Modal ---
 interface LightboxProps {
   src: string;
@@ -133,7 +136,7 @@ const Lightbox: React.FC<LightboxProps> = ({ src, onClose }) => {
         >
           <video
             ref={videoRef}
-            src={`/reels/${encodeURIComponent(src)}`}
+            src={`${CDN_BASE}/${encodeURIComponent(src)}`}
             controls
             playsInline
             loop
@@ -244,7 +247,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ src, index, onOpen }) => {
 
       <video
         ref={videoRef}
-        src={`/reels/${encodeURIComponent(src)}`}
+        src={`${CDN_BASE}/${encodeURIComponent(src)}`}
         muted
         playsInline
         loop
