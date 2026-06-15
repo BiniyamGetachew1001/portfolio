@@ -3,9 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pricing Protocols | Biniyam Edits</title>
-    
-    <!-- Tailwind CSS -->
+    <title>Pricing | Biniyam Edits</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -13,430 +12,434 @@
           extend: {
             colors: {
               black: '#020202',
-              'noir-black': '#050505',
-              'electric-violet': '#7F00FF',
+              violet: { DEFAULT: '#7F00FF' },
             },
             fontFamily: {
-              sans: ['Syne', 'sans-serif'],
-              mono: ['JetBrains Mono', 'monospace'],
+              sans:    ['Syne', 'sans-serif'],
+              mono:    ['JetBrains Mono', 'monospace'],
               display: ['Oswald', 'sans-serif'],
             },
-            animation: {
-              'spin-slow': 'spin 20s linear infinite',
-              'pulse-glow': 'pulseGlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            },
-            keyframes: {
-              pulseGlow: {
-                '0%, 100%': { opacity: 0.5, transform: 'scale(1)' },
-                '50%': { opacity: 0.8, transform: 'scale(1.05)' },
-              }
-            }
           },
         },
       };
     </script>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Oswald:wght@500;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 
     <style>
+        *, *::before, *::after { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #020202; }
-        ::-webkit-scrollbar-thumb { background: #7F00FF; border-radius: 2px; }
-        
-        body { cursor: none; background-color: #020202; color: white; overflow-x: hidden; }
+        body { background: #020202; color: #fff; font-family: 'Syne', sans-serif; overflow-x: hidden; cursor: none; }
         a, button { cursor: none; }
 
-        /* Film Grain Overlay */
-        .film-grain {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            opacity: 0.25;
-            mix-blend-mode: overlay;
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: #020202; }
+        ::-webkit-scrollbar-thumb { background: #7F00FF; border-radius: 2px; }
+
+        /* Film grain */
+        .grain {
+            position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: .18; mix-blend-mode: overlay;
         }
 
-        /* Magnetic Custom Cursor */
-        .custom-cursor {
-            width: 12px;
-            height: 12px;
-            border: 1px solid rgba(255,255,255,0.8);
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(2px);
+        /* Cursor */
+        #cur {
+            width: 10px; height: 10px;
+            border: 1px solid rgba(255,255,255,.7);
             border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000;
-            transition: transform 0.15s ease-out, width 0.2s, height 0.2s, background-color 0.2s;
-            transform: translate(-50%, -50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; pointer-events: none; z-index: 9999;
+            transform: translate(-50%,-50%);
+            transition: width .18s, height .18s, background .18s, border-color .18s;
+        }
+        #cur.h {
+            width: 52px; height: 52px;
+            background: rgba(127,0,255,.12);
+            border-color: rgba(127,0,255,.5);
         }
 
-        .custom-cursor.hover {
-            width: 60px;
-            height: 60px;
-            background: rgba(127, 0, 255, 0.1);
-            border-color: rgba(127, 0, 255, 0.5);
-            backdrop-filter: blur(4px);
+        /* Ambient blobs */
+        .blob {
+            position: fixed; border-radius: 50%; filter: blur(130px);
+            pointer-events: none; z-index: 0; animation: pulse 8s ease-in-out infinite;
         }
+        @keyframes pulse { 0%,100%{opacity:.5;transform:scale(1)} 50%{opacity:.75;transform:scale(1.05)} }
 
-        .custom-cursor.hover::after {
-            content: 'CLICK';
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 8px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            color: white;
-        }
-
-        /* Advanced Card Hover Glow Effect */
-        .glow-card {
-            position: relative;
-            background: rgba(10, 10, 10, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        /* Card base */
+        .card {
+            background: rgba(10,10,10,.55);
+            border: 1px solid rgba(255,255,255,.07);
             border-radius: 1.5rem;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            backdrop-filter: blur(20px);
+            position: relative; overflow: hidden;
+            transition: transform .35s cubic-bezier(.23,1,.32,1), box-shadow .35s, border-color .35s;
+        }
+        .card::after {
+            content:''; position:absolute; inset:0; border-radius:inherit;
+            background: radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(127,0,255,.18), transparent 55%);
+            opacity:0; transition: opacity .35s; pointer-events:none;
+        }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px -12px rgba(0,0,0,.9), 0 0 40px -12px rgba(127,0,255,.18); border-color: rgba(127,0,255,.25); }
+        .card:hover::after { opacity:1; }
+
+        /* Featured card */
+        .card-featured {
+            border-color: rgba(127,0,255,.35);
+            background: linear-gradient(160deg, rgba(127,0,255,.08) 0%, rgba(10,10,10,.6) 60%);
+            box-shadow: inset 0 0 60px rgba(127,0,255,.06), 0 10px 40px rgba(127,0,255,.12);
         }
 
-        .glow-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: inherit;
-            padding: 2px;
-            background: radial-gradient(
-                800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                rgba(127, 0, 255, 0.4),
-                transparent 40%
-            );
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.4s ease;
+        /* Dot bullet */
+        .dot { width:6px; height:6px; border-radius:1px; flex-shrink:0; margin-top:5px; }
+
+        /* CTA button */
+        .btn-outline {
+            width:100%; padding:14px; border:1px solid rgba(255,255,255,.12); border-radius:.875rem;
+            font-family:'JetBrains Mono',monospace; font-size:.65rem; font-weight:700;
+            letter-spacing:.18em; text-transform:uppercase; color:#fff;
+            background: rgba(255,255,255,.04);
+            transition: background .25s, border-color .25s, color .25s, box-shadow .25s;
+        }
+        .btn-outline:hover { background:#fff; color:#020202; border-color:#fff; }
+
+        .btn-primary {
+            width:100%; padding:14px; border-radius:.875rem;
+            font-family:'JetBrains Mono',monospace; font-size:.65rem; font-weight:700;
+            letter-spacing:.18em; text-transform:uppercase; color:#fff;
+            background: linear-gradient(135deg,#7F00FF,#b833ff);
+            transition: box-shadow .25s, transform .2s;
+        }
+        .btn-primary:hover { box-shadow: 0 0 30px rgba(127,0,255,.55); transform: scale(1.02); }
+
+        /* Feature row line */
+        .feat { display:flex; align-items:flex-start; gap:12px; }
+        .feat span { font-family:'JetBrains Mono',monospace; font-size:.7rem; line-height:1.6; text-transform:uppercase; letter-spacing:.08em; }
+
+        /* Divider */
+        .divider { border:none; border-top:1px solid rgba(255,255,255,.07); margin:1.5rem 0; }
+
+        /* Badge */
+        .badge {
+            display:inline-flex; align-items:center; gap:6px;
+            background:rgba(127,0,255,1); color:#fff; padding:4px 12px;
+            border-radius:999px; font-family:'JetBrains Mono',monospace;
+            font-size:.6rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
+            box-shadow:0 0 18px rgba(127,0,255,.6);
         }
 
-        .glow-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8), 0 0 40px -10px rgba(127, 0, 255, 0.15);
-            border-color: transparent;
-            background: rgba(15, 15, 15, 0.6);
-        }
+        /* FAQ accordion */
+        details summary { list-style:none; cursor:none; }
+        details summary::-webkit-details-marker { display:none; }
+        details[open] .arrow { transform: rotate(180deg); }
+        .arrow { transition: transform .25s; }
 
-        .glow-card:hover::before {
-            opacity: 1;
-        }
-
-        .glow-card-premium {
-            border: 1px solid rgba(127, 0, 255, 0.3);
-            background: linear-gradient(180deg, rgba(127, 0, 255, 0.05) 0%, rgba(10, 10, 10, 0.4) 100%);
-            box-shadow: inset 0 0 40px rgba(127,0,255,0.05), 0 10px 40px rgba(127,0,255,0.1);
-        }
-
-        /* Marquee Background */
-        .marquee-bg {
-            white-space: nowrap;
-            position: absolute;
-            opacity: 0.03;
-            font-size: 25vw;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-family: 'Oswald', sans-serif;
-            line-height: 0.8;
-            pointer-events: none;
-            z-index: 0;
-            animation: marquee 60s linear infinite;
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(to right, #fff, #a855f7);
-        }
+        /* Comparison table */
+        .tbl td, .tbl th { padding:14px 20px; border-bottom:1px solid rgba(255,255,255,.05); }
+        .tbl th { font-family:'JetBrains Mono',monospace; font-size:.6rem; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.4); font-weight:400; }
+        .tbl td:first-child { font-family:'JetBrains Mono',monospace; font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:rgba(255,255,255,.55); }
+        .tbl td:not(:first-child) { text-align:center; font-family:'JetBrains Mono',monospace; font-size:.75rem; font-weight:700; }
+        .check { color:#7F00FF; }
+        .dash  { color:rgba(255,255,255,.18); }
     </style>
 </head>
-<body class="antialiased font-sans">
-    <div class="film-grain"></div>
-    <div id="cursor" class="custom-cursor"></div>
+<body class="antialiased">
+    <div class="grain"></div>
+    <div id="cur"></div>
 
-    <!-- Navigation -->
-    <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center">
-        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-full px-6 py-3 flex items-center gap-8 shadow-[0_0_30px_rgba(0,0,0,0.8)] transition-all hover:bg-black/60 hover:border-white/20">
-            <a href="/" class="font-display font-bold text-lg tracking-tight text-white hover:text-electric-violet transition-colors">BE.</a>
+    <!-- Ambient blobs -->
+    <div class="blob w-[55vw] h-[55vw] bg-violet-900/20 top-[-15%] left-[-15%]"></div>
+    <div class="blob w-[50vw] h-[50vw] bg-fuchsia-900/15 bottom-[-20%] right-[-10%]" style="animation-delay:3s"></div>
+
+    <!-- ── NAV ── -->
+    <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-full px-6 py-3 flex items-center gap-8 shadow-[0_0_30px_rgba(0,0,0,0.8)]">
+            <a href="/" class="font-display font-bold text-lg tracking-tight text-white hover:text-[#7F00FF] transition-colors">BE.</a>
             <div class="hidden md:flex gap-8 font-mono text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-                <a href="/#work" class="hover:text-white transition-colors">Work</a>
+                <a href="/#work"       class="hover:text-white transition-colors">Work</a>
                 <a href="/gallery.html" class="hover:text-white transition-colors">Graphics</a>
-                <a href="/pricing.html" class="text-white">Pricing <span class="block w-full h-[1px] bg-electric-violet mt-1"></span></a>
-                <a href="/#about" class="hover:text-white transition-colors">About</a>
+                <a href="/pricing.html" class="text-white relative">Pricing<span class="absolute -bottom-1 left-0 w-full h-[1px] bg-[#7F00FF]"></span></a>
+                <a href="/#about"      class="hover:text-white transition-colors">About</a>
             </div>
-            <a href="/#contact" class="bg-white text-black font-bold font-mono text-[10px] px-5 py-2.5 rounded-full hover:bg-electric-violet hover:text-white hover:shadow-[0_0_15px_rgba(127,0,255,0.5)] transition-all uppercase tracking-widest">
-                Initialize Contact
+            <a href="/#contact" class="bg-white text-black font-bold font-mono text-[10px] px-5 py-2.5 rounded-full hover:bg-[#7F00FF] hover:text-white hover:shadow-[0_0_15px_rgba(127,0,255,.5)] transition-all uppercase tracking-widest">
+                Let's Talk
             </a>
         </div>
     </nav>
 
-    <!-- Background Ambience -->
-    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div class="marquee-bg top-20 text-white">RETAINER PROTOCOLS // RETAINER PROTOCOLS //</div>
-        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-electric-violet/10 rounded-full blur-[150px] animate-pulse-glow"></div>
-        <div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-fuchsia-900/10 rounded-full blur-[150px] animate-pulse-glow" style="animation-delay: 2s;"></div>
-    </div>
-
-    <!-- Pricing Hero -->
-    <section class="pt-48 pb-20 px-4 relative z-10 flex flex-col items-center">
-        <div class="max-w-4xl mx-auto text-center space-y-6">
-            <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full mb-4 backdrop-blur-md">
-                <div class="w-1.5 h-1.5 rounded-full bg-electric-violet animate-pulse"></div>
-                <span class="font-mono text-[9px] text-gray-300 font-bold uppercase tracking-[0.2em]">Scale Your Authority</span>
-            </div>
-            
-            <h1 class="font-display text-6xl md:text-8xl lg:text-9xl font-bold uppercase tracking-tighter leading-[0.9]">
-                Monthly <br/>
-                <span class="text-gradient italic">Retainers.</span>
-            </h1>
-            
-            <p class="font-mono text-xs md:text-sm text-gray-400 max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
-                Consistent, high-velocity output engineered for extreme retention. <br class="hidden md:block"/>
-                Secure a protocol and save <span class="text-electric-violet font-bold bg-electric-violet/10 px-1 rounded">10-20% off</span> standard rates.
-            </p>
+    <!-- ── HERO ── -->
+    <section class="relative z-10 pt-44 pb-16 px-4 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full mb-8">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#7F00FF] animate-pulse inline-block"></span>
+            <span class="font-mono text-[9px] text-gray-300 uppercase tracking-[.2em]">Monthly Retainer Plans</span>
         </div>
-    </section>
 
-    <!-- Advanced Pricing Grid -->
-    <section class="pb-32 px-4 relative z-10">
-        <div class="max-w-[1400px] mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                
-                <!-- Plan 1: Essential -->
-                <div class="glow-card p-8 flex flex-col h-full backdrop-blur-md">
-                    <div class="mb-8">
-                        <span class="font-mono text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em]">Tier 01</span>
-                        <h2 class="font-display text-4xl font-bold text-white mt-2">Essential</h2>
-                        <div class="flex items-baseline gap-1 mt-4">
-                            <span class="font-display text-5xl font-bold text-white">$400</span>
-                            <span class="font-mono text-[10px] text-gray-500 uppercase">/ mo</span>
-                        </div>
-                        <p class="text-[10px] font-mono text-gray-500 uppercase tracking-widest mt-4 pb-6 border-b border-white/10">
-                            Minimum 2 month protocol.
-                        </p>
-                    </div>
+        <h1 class="font-display text-6xl md:text-8xl font-bold uppercase leading-[.9] mb-6">
+            Simple,<br/>
+            <span style="background:linear-gradient(90deg,#fff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Honest</span>
+            Pricing.
+        </h1>
 
-                    <ul class="flex-1 space-y-4 mb-8">
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-1.5 h-1.5 bg-electric-violet rounded-sm shadow-[0_0_5px_rgba(127,0,255,0.8)]"></div>
-                            <span class="font-mono text-xs text-gray-300 uppercase">10 High-End Clips / Mo</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-1.5 h-1.5 bg-electric-violet rounded-sm shadow-[0_0_5px_rgba(127,0,255,0.8)]"></div>
-                            <span class="font-mono text-xs text-gray-300 uppercase">20 Clips Total (2 Mos)</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-1.5 h-1.5 bg-green-500 rounded-sm shadow-[0_0_5px_rgba(34,197,94,0.8)]"></div>
-                            <span class="font-mono text-xs text-white font-bold uppercase">Save up to $200</span>
-                        </li>
-                    </ul>
+        <p class="font-mono text-xs md:text-sm text-gray-400 max-w-xl mx-auto leading-relaxed">
+            No hidden fees. No surprises. Choose a plan and get consistent,<br class="hidden md:block"/>
+            cinematic content delivered every month.
+        </p>
 
-                    <button class="w-full py-4 bg-white/5 border border-white/10 hover:border-white/30 rounded-xl font-mono text-[10px] font-bold text-white uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all">
-                        Initialize
-                    </button>
-                </div>
-
-                <!-- Plan 2: Advanced -->
-                <div class="glow-card p-8 flex flex-col h-full backdrop-blur-md">
-                    <div class="mb-8">
-                        <span class="font-mono text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em]">Tier 02</span>
-                        <h2 class="font-display text-4xl font-bold text-white mt-2">Advanced</h2>
-                        <div class="flex items-baseline gap-1 mt-4">
-                            <span class="font-display text-5xl font-bold text-white">$800</span>
-                            <span class="font-mono text-[10px] text-gray-500 uppercase">/ mo</span>
-                        </div>
-                        <p class="text-[10px] font-mono text-gray-500 uppercase tracking-widest mt-4 pb-6 border-b border-white/10">
-                            Minimum 2 month protocol.
-                        </p>
-                    </div>
-
-                    <ul class="flex-1 space-y-4 mb-8">
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-1.5 h-1.5 bg-electric-violet rounded-sm shadow-[0_0_5px_rgba(127,0,255,0.8)]"></div>
-                            <span class="font-mono text-xs text-gray-300 uppercase">10 Premium Clips / Mo</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-1.5 h-1.5 bg-electric-violet rounded-sm shadow-[0_0_5px_rgba(127,0,255,0.8)]"></div>
-                            <span class="font-mono text-xs text-gray-300 uppercase">20 Clips Total (2 Mos)</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-1.5 h-1.5 bg-green-500 rounded-sm shadow-[0_0_5px_rgba(34,197,94,0.8)]"></div>
-                            <span class="font-mono text-xs text-white font-bold uppercase">Save up to $200</span>
-                        </li>
-                    </ul>
-
-                    <button class="w-full py-4 bg-white/5 border border-white/10 hover:border-white/30 rounded-xl font-mono text-[10px] font-bold text-white uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all">
-                        Initialize
-                    </button>
-                </div>
-
-                <!-- Plan 3: Premium (Highlighted) -->
-                <div class="glow-card glow-card-premium p-8 flex flex-col h-full backdrop-blur-xl relative xl:-translate-y-4">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-electric-violet text-white px-3 py-1 rounded-full font-mono text-[9px] font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(127,0,255,0.6)] z-20 flex items-center gap-2">
-                        <div class="w-1 h-1 bg-white rounded-full animate-pulse"></div>
-                        Recommended
-                    </div>
-                    
-                    <div class="mb-8 mt-2">
-                        <span class="font-mono text-[10px] text-violet-400 font-bold uppercase tracking-[0.2em]">Tier 03</span>
-                        <h2 class="font-display text-4xl font-bold text-white mt-2 italic">Premium</h2>
-                        <div class="flex items-baseline gap-1 mt-4">
-                            <span class="font-display text-5xl font-bold text-white">$1,050</span>
-                            <span class="font-mono text-[10px] text-gray-400 uppercase">/ mo</span>
-                        </div>
-                        <p class="text-[10px] font-mono text-gray-400 uppercase tracking-widest mt-4 pb-6 border-b border-violet-500/20">
-                            Minimum 2 month protocol.
-                        </p>
-                    </div>
-
-                    <ul class="flex-1 space-y-4 mb-8">
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-2 h-2 bg-white rounded-[1px] shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
-                            <span class="font-mono text-xs text-white font-bold uppercase">10 Elite Clips / Mo</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-2 h-2 bg-white rounded-[1px] shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
-                            <span class="font-mono text-xs text-white font-bold uppercase">20 Clips Total (2 Mos)</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-1.5 h-1.5 bg-green-400 rounded-[1px] shadow-[0_0_5px_rgba(74,222,128,0.8)]"></div>
-                            <span class="font-mono text-xs text-green-400 font-bold uppercase">Save up to $300</span>
-                        </li>
-                        <li class="flex items-start gap-3 pt-4">
-                            <div class="mt-1 w-1.5 h-1.5 bg-violet-400 rounded-full"></div>
-                            <span class="font-mono text-[10px] text-violet-300 uppercase leading-relaxed">Priority Queue & Advanced Sound Design Included</span>
-                        </li>
-                    </ul>
-
-                    <button class="w-full py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl font-mono text-[10px] font-bold text-white uppercase tracking-[0.2em] hover:shadow-[0_0_25px_rgba(127,0,255,0.6)] hover:scale-[1.02] transition-all">
-                        Deploy Protocol
-                    </button>
-                </div>
-
-                <!-- Plan 4: Minimalist -->
-                <div class="glow-card p-8 flex flex-col h-full backdrop-blur-md">
-                    <div class="mb-8">
-                        <span class="font-mono text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em]">Tier 04</span>
-                        <h2 class="font-display text-4xl font-bold text-white mt-2">Minimalist</h2>
-                        <div class="flex items-baseline gap-1 mt-4">
-                            <span class="font-display text-5xl font-bold text-white">$1,500</span>
-                            <span class="font-mono text-[10px] text-gray-500 uppercase">/ mo</span>
-                        </div>
-                        <p class="text-[10px] font-mono text-gray-500 uppercase tracking-widest mt-4 pb-6 border-b border-white/10">
-                            Minimum 2 month protocol.
-                        </p>
-                    </div>
-
-                    <ul class="flex-1 space-y-4 mb-8">
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-1.5 h-1.5 bg-electric-violet rounded-sm shadow-[0_0_5px_rgba(127,0,255,0.8)]"></div>
-                            <span class="font-mono text-xs text-gray-300 uppercase">10 Master Clips / Mo</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-1.5 h-1.5 bg-electric-violet rounded-sm shadow-[0_0_5px_rgba(127,0,255,0.8)]"></div>
-                            <span class="font-mono text-xs text-gray-300 uppercase">20 Clips Total (2 Mos)</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="mt-1 w-1.5 h-1.5 bg-green-500 rounded-sm shadow-[0_0_5px_rgba(34,197,94,0.8)]"></div>
-                            <span class="font-mono text-xs text-white font-bold uppercase">Save up to $400</span>
-                        </li>
-                        <li class="flex items-start gap-3 pt-4">
-                            <div class="mt-1 w-1.5 h-1.5 bg-gray-500 rounded-full"></div>
-                            <span class="font-mono text-[10px] text-gray-400 uppercase leading-relaxed">Dedicated Strategy Calls</span>
-                        </li>
-                    </ul>
-
-                    <button class="w-full py-4 bg-white/5 border border-white/10 hover:border-white/30 rounded-xl font-mono text-[10px] font-bold text-white uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all">
-                        Initialize
-                    </button>
-                </div>
-
+        <!-- Trust bar -->
+        <div class="mt-10 flex flex-wrap justify-center gap-6">
+            <div class="flex items-center gap-2 font-mono text-[10px] text-gray-500 uppercase tracking-widest">
+                <svg class="w-3.5 h-3.5 text-[#7F00FF]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                No contracts
             </div>
-            
-            <!-- Global Note -->
-            <div class="mt-12 text-center">
-                <div class="inline-flex items-center gap-3 bg-black/40 border border-white/5 backdrop-blur-md px-6 py-3 rounded-xl">
-                    <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <p class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">System Note: Minimum commitment of 2 months required on all protocols to ensure metric consistency and audience retention.</p>
-                </div>
+            <div class="flex items-center gap-2 font-mono text-[10px] text-gray-500 uppercase tracking-widest">
+                <svg class="w-3.5 h-3.5 text-[#7F00FF]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Fast turnaround
+            </div>
+            <div class="flex items-center gap-2 font-mono text-[10px] text-gray-500 uppercase tracking-widest">
+                <svg class="w-3.5 h-3.5 text-[#7F00FF]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Unlimited revisions
             </div>
         </div>
     </section>
 
-    <!-- Custom Needs Footer -->
-    <section class="pb-32 px-4 relative z-10 border-t border-white/5">
-        <div class="max-w-3xl mx-auto text-center pt-24 space-y-8">
-            <h2 class="font-display text-5xl md:text-6xl font-bold uppercase italic tracking-tighter text-white">
-                Enterprise <br/> <span class="text-stroke -webkit-text-stroke-[1px] -webkit-text-stroke-white/30 text-transparent">Architecture.</span>
+    <!-- ── PRICING CARDS ── -->
+    <section class="relative z-10 pb-24 px-4">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 items-start">
+
+            <!-- Starter -->
+            <div class="card p-8 flex flex-col gap-6">
+                <div>
+                    <p class="font-mono text-[9px] text-gray-500 uppercase tracking-[.2em] mb-2">Starter</p>
+                    <h2 class="font-display text-3xl font-bold uppercase">Essential</h2>
+                    <div class="mt-5 flex items-end gap-1.5">
+                        <span class="font-display text-5xl font-bold">$400</span>
+                        <span class="font-mono text-[10px] text-gray-500 mb-1.5">/ month</span>
+                    </div>
+                    <p class="font-mono text-[10px] text-gray-500 mt-1">Min. 2-month commitment</p>
+                </div>
+
+                <hr class="divider"/>
+
+                <ul class="flex flex-col gap-4 flex-1">
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">10 short-form clips / mo</span></li>
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">Color grading + sound</span></li>
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">Captions & subtitles</span></li>
+                    <li class="feat"><div class="dot bg-green-400 shadow-[0_0_6px_rgba(74,222,128,.7)]"></div><span class="text-green-400 font-bold">Save $200 vs. per-clip rate</span></li>
+                </ul>
+
+                <button class="btn-outline">Get Started →</button>
+            </div>
+
+            <!-- Advanced -->
+            <div class="card p-8 flex flex-col gap-6">
+                <div>
+                    <p class="font-mono text-[9px] text-gray-500 uppercase tracking-[.2em] mb-2">Growth</p>
+                    <h2 class="font-display text-3xl font-bold uppercase">Advanced</h2>
+                    <div class="mt-5 flex items-end gap-1.5">
+                        <span class="font-display text-5xl font-bold">$800</span>
+                        <span class="font-mono text-[10px] text-gray-500 mb-1.5">/ month</span>
+                    </div>
+                    <p class="font-mono text-[10px] text-gray-500 mt-1">Min. 2-month commitment</p>
+                </div>
+
+                <hr class="divider"/>
+
+                <ul class="flex flex-col gap-4 flex-1">
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">20 premium clips / mo</span></li>
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">Advanced color grading</span></li>
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">Motion graphics add-ons</span></li>
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">2-day turnaround</span></li>
+                    <li class="feat"><div class="dot bg-green-400 shadow-[0_0_6px_rgba(74,222,128,.7)]"></div><span class="text-green-400 font-bold">Save $400 vs. per-clip rate</span></li>
+                </ul>
+
+                <button class="btn-outline">Get Started →</button>
+            </div>
+
+            <!-- Premium — FEATURED -->
+            <div class="card card-featured p-8 flex flex-col gap-6 xl:-translate-y-5 relative">
+                <!-- Badge -->
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                    <span class="badge"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse inline-block"></span>Most Popular</span>
+                </div>
+
+                <div class="mt-4">
+                    <p class="font-mono text-[9px] text-violet-400 uppercase tracking-[.2em] mb-2">Best Value</p>
+                    <h2 class="font-display text-3xl font-bold uppercase italic">Premium</h2>
+                    <div class="mt-5 flex items-end gap-1.5">
+                        <span class="font-display text-5xl font-bold">$1,050</span>
+                        <span class="font-mono text-[10px] text-gray-400 mb-1.5">/ month</span>
+                    </div>
+                    <p class="font-mono text-[10px] text-gray-500 mt-1">Min. 2-month commitment</p>
+                </div>
+
+                <hr class="divider"/>
+
+                <ul class="flex flex-col gap-4 flex-1">
+                    <li class="feat"><div class="dot bg-white shadow-[0_0_8px_rgba(255,255,255,.7)]"></div><span class="text-white font-bold">30 elite clips / mo</span></li>
+                    <li class="feat"><div class="dot bg-white shadow-[0_0_8px_rgba(255,255,255,.7)]"></div><span class="text-white font-bold">Cinematic color grading</span></li>
+                    <li class="feat"><div class="dot bg-white shadow-[0_0_8px_rgba(255,255,255,.7)]"></div><span class="text-white font-bold">Custom sound design</span></li>
+                    <li class="feat"><div class="dot bg-white shadow-[0_0_8px_rgba(255,255,255,.7)]"></div><span class="text-white font-bold">Priority queue — 24hr delivery</span></li>
+                    <li class="feat"><div class="dot bg-white shadow-[0_0_8px_rgba(255,255,255,.7)]"></div><span class="text-white font-bold">Monthly strategy call</span></li>
+                    <li class="feat"><div class="dot bg-green-400 shadow-[0_0_6px_rgba(74,222,128,.7)]"></div><span class="text-green-400 font-bold">Save $600 vs. per-clip rate</span></li>
+                </ul>
+
+                <button class="btn-primary">Start Premium →</button>
+            </div>
+
+            <!-- Elite -->
+            <div class="card p-8 flex flex-col gap-6">
+                <div>
+                    <p class="font-mono text-[9px] text-gray-500 uppercase tracking-[.2em] mb-2">Full-Scale</p>
+                    <h2 class="font-display text-3xl font-bold uppercase">Elite</h2>
+                    <div class="mt-5 flex items-end gap-1.5">
+                        <span class="font-display text-5xl font-bold">$1,500</span>
+                        <span class="font-mono text-[10px] text-gray-500 mb-1.5">/ month</span>
+                    </div>
+                    <p class="font-mono text-[10px] text-gray-500 mt-1">Min. 2-month commitment</p>
+                </div>
+
+                <hr class="divider"/>
+
+                <ul class="flex flex-col gap-4 flex-1">
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">Unlimited clips / mo</span></li>
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">Full production pipeline</span></li>
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">Dedicated editor on-call</span></li>
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">Weekly strategy sessions</span></li>
+                    <li class="feat"><div class="dot bg-[#7F00FF] shadow-[0_0_6px_rgba(127,0,255,.8)]"></div><span class="text-gray-300">Brand identity package</span></li>
+                    <li class="feat"><div class="dot bg-green-400 shadow-[0_0_6px_rgba(74,222,128,.7)]"></div><span class="text-green-400 font-bold">Maximum value, zero limits</span></li>
+                </ul>
+
+                <button class="btn-outline">Get Started →</button>
+            </div>
+
+        </div>
+
+        <!-- Note -->
+        <p class="mt-10 text-center font-mono text-[9px] text-gray-600 uppercase tracking-widest">
+            All prices in USD · 2-month minimum on all plans · Unlimited revisions included
+        </p>
+    </section>
+
+    <!-- ── COMPARISON TABLE ── -->
+    <section class="relative z-10 pb-24 px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="font-display text-4xl md:text-5xl font-bold uppercase text-center mb-12">
+                Compare <span style="-webkit-text-stroke:1px rgba(255,255,255,.2);color:transparent;">Plans</span>
             </h2>
-            <p class="font-mono text-xs md:text-sm text-gray-500 uppercase tracking-widest leading-loose">
-                Operating a high-volume agency or production house? <br/>
-                We build custom editing pipelines designed to scale effortlessly.
-            </p>
-            <a href="/#contact" class="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-mono text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-electric-violet hover:text-white hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transition-all">
-                Request Custom Quote
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </a>
+            <div class="card overflow-hidden">
+                <table class="tbl w-full">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Feature</th>
+                            <th>Essential</th>
+                            <th>Advanced</th>
+                            <th class="text-[#a855f7]">Premium</th>
+                            <th>Elite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Clips / month</td><td>10</td><td>20</td><td class="text-[#a855f7]">30</td><td>Unlimited</td></tr>
+                        <tr><td>Color grading</td><td class="check">✓</td><td class="check">✓</td><td class="check text-[#a855f7]">✓</td><td class="check">✓</td></tr>
+                        <tr><td>Sound design</td><td class="dash">—</td><td class="dash">—</td><td class="check text-[#a855f7]">✓</td><td class="check">✓</td></tr>
+                        <tr><td>Motion graphics</td><td class="dash">—</td><td class="check">✓</td><td class="check text-[#a855f7]">✓</td><td class="check">✓</td></tr>
+                        <tr><td>Priority delivery</td><td class="dash">—</td><td class="dash">—</td><td class="check text-[#a855f7]">24 hrs</td><td class="check">Same day</td></tr>
+                        <tr><td>Strategy calls</td><td class="dash">—</td><td class="dash">—</td><td class="check text-[#a855f7]">Monthly</td><td class="check">Weekly</td></tr>
+                        <tr><td>Dedicated editor</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
+                        <tr style="border-bottom:none"><td>Brand package</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="check">✓</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
-    <!-- Footer Meta -->
-    <footer class="pb-12 text-center relative z-10">
-        <div class="max-w-4xl mx-auto px-4 opacity-50">
-            <p class="font-mono text-[9px] text-white uppercase tracking-[0.3em] leading-relaxed">
-                Prices in USD. All protocols strictly confidential. <br/>
-                © 2026 BINIYAM EDITS | SYSTEM ARCHITECTURE v5.0
-            </p>
+    <!-- ── FAQ ── -->
+    <section class="relative z-10 pb-24 px-4">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="font-display text-4xl font-bold uppercase text-center mb-10">FAQ</h2>
+
+            <div class="flex flex-col gap-3">
+                <!-- Q1 -->
+                <details class="card px-6 py-5 group">
+                    <summary class="flex items-center justify-between">
+                        <span class="font-mono text-xs uppercase tracking-widest text-white">Can I change my plan later?</span>
+                        <svg class="arrow w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <p class="font-mono text-[10px] text-gray-400 mt-4 leading-relaxed uppercase tracking-wider">Yes — you can upgrade or downgrade at the end of any billing cycle. No penalties.</p>
+                </details>
+                <!-- Q2 -->
+                <details class="card px-6 py-5">
+                    <summary class="flex items-center justify-between">
+                        <span class="font-mono text-xs uppercase tracking-widest text-white">What counts as a "clip"?</span>
+                        <svg class="arrow w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <p class="font-mono text-[10px] text-gray-400 mt-4 leading-relaxed uppercase tracking-wider">A short-form video up to 90 seconds — optimised for TikTok, Instagram Reels, or YouTube Shorts. Longer formats are available on Elite.</p>
+                </details>
+                <!-- Q3 -->
+                <details class="card px-6 py-5">
+                    <summary class="flex items-center justify-between">
+                        <span class="font-mono text-xs uppercase tracking-widest text-white">How many revisions do I get?</span>
+                        <svg class="arrow w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <p class="font-mono text-[10px] text-gray-400 mt-4 leading-relaxed uppercase tracking-wider">Unlimited. I keep revising until you're 100% happy — no extra charge.</p>
+                </details>
+                <!-- Q4 -->
+                <details class="card px-6 py-5">
+                    <summary class="flex items-center justify-between">
+                        <span class="font-mono text-xs uppercase tracking-widest text-white">What do you need from me to start?</span>
+                        <svg class="arrow w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <p class="font-mono text-[10px] text-gray-400 mt-4 leading-relaxed uppercase tracking-wider">Raw footage and a brief — that's it. I handle the rest. We do a quick onboarding call to align on your style and goals.</p>
+                </details>
+            </div>
         </div>
+    </section>
+
+    <!-- ── CUSTOM / CTA ── -->
+    <section class="relative z-10 pb-32 px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="card card-featured p-14 flex flex-col items-center gap-6">
+                <p class="font-mono text-[9px] text-violet-400 uppercase tracking-[.25em]">Need Something Custom?</p>
+                <h2 class="font-display text-4xl md:text-5xl font-bold uppercase leading-tight">
+                    Let's Build<br/>
+                    <span style="-webkit-text-stroke:1px rgba(255,255,255,.2);color:transparent;">Your Pipeline.</span>
+                </h2>
+                <p class="font-mono text-[10px] text-gray-400 uppercase tracking-wider leading-loose max-w-md">
+                    High-volume brand? Agency? I build custom editing pipelines tailored to your output — get a quote in 24 hrs.
+                </p>
+                <a href="/#contact" class="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-mono text-[10px] font-bold uppercase tracking-[.2em] hover:bg-[#7F00FF] hover:text-white hover:shadow-[0_0_20px_rgba(127,0,255,.5)] transition-all">
+                    Request a Custom Quote
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer class="relative z-10 pb-12 text-center border-t border-white/5 pt-8">
+        <p class="font-mono text-[8px] text-white/25 uppercase tracking-[.3em]">
+            © 2026 Biniyam Edits · All prices USD · <a href="/" class="hover:text-white/50 transition-colors">Back to Portfolio</a>
+        </p>
     </footer>
 
-    <!-- Interactive Scripts -->
     <script>
-        // Custom Cursor Logic
-        const cursor = document.getElementById('cursor');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+        // Cursor
+        const cur = document.getElementById('cur');
+        document.addEventListener('mousemove', e => {
+            cur.style.left = e.clientX + 'px';
+            cur.style.top  = e.clientY + 'px';
+        });
+        document.querySelectorAll('a,button,summary').forEach(el => {
+            el.addEventListener('mouseenter', () => cur.classList.add('h'));
+            el.addEventListener('mouseleave', () => cur.classList.remove('h'));
         });
 
-        document.querySelectorAll('a, button').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.classList.add('hover');
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.classList.remove('hover');
-            });
-        });
-
-        // Glow Card Mouse Follow Logic
-        document.querySelectorAll('.glow-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
+        // Card glow follow
+        document.querySelectorAll('.card').forEach(c => {
+            c.addEventListener('mousemove', e => {
+                const r = c.getBoundingClientRect();
+                c.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                c.style.setProperty('--my', `${e.clientY - r.top}px`);
             });
         });
     </script>
