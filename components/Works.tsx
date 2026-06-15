@@ -6,19 +6,24 @@ interface Project {
   id: number;
   title: string;
   category: string;
-  span: string; // Tailwind grid span class
-  videoUrl: string; // Placeholder for video/image
+  span: string;
+  videoUrl: string;
   aspect: string;
 }
 
 const categories = ["ALL", "COMMERCIAL", "SHORT-FORM", "DOCUMENTARY", "MUSIC VIDEO", "MOTION GFX"];
 
 const projects: Project[] = [
-  { id: 1, title: "NIKE // VELOCITY", category: "COMMERCIAL", span: "md:col-span-2 md:row-span-2", videoUrl: "https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=2070&auto=format&fit=crop", aspect: "aspect-video" },
-  { id: 2, title: "LIFESTYLE VLOG", category: "SHORT-FORM", span: "md:col-span-1 md:row-span-2", videoUrl: "https://images.unsplash.com/photo-1616469829941-c7200edec809?q=80&w=1000&auto=format&fit=crop", aspect: "aspect-[9/16]" },
-  { id: 3, title: "TECH REVIEW", category: "DOCUMENTARY", span: "md:col-span-1 md:row-span-1", videoUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop", aspect: "aspect-square" },
-  { id: 4, title: "CYBERPUNK UI", category: "MOTION GFX", span: "md:col-span-1 md:row-span-1", videoUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop", aspect: "aspect-square" },
-  { id: 5, title: "NEON NIGHTS", category: "MUSIC VIDEO", span: "md:col-span-1 md:row-span-1", videoUrl: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=2070&auto=format&fit=crop", aspect: "aspect-video" },
+  { id: 1,  title: "MOVE",              category: "COMMERCIAL",   span: "md:col-span-2 md:row-span-2", videoUrl: "/works/biniyamedit%20move.png",          aspect: "aspect-video"   },
+  { id: 2,  title: "HABESHA GIRLS",     category: "SHORT-FORM",   span: "md:col-span-1 md:row-span-2", videoUrl: "/works/biniyamedit%20habesha%20girls.png", aspect: "aspect-[9/16]" },
+  { id: 3,  title: "AKSUM",             category: "DOCUMENTARY",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20Aksum.png",          aspect: "aspect-square"  },
+  { id: 4,  title: "CHIMBLE",           category: "MOTION GFX",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/chimble.png",                      aspect: "aspect-square"  },
+  { id: 5,  title: "GONDER",            category: "MUSIC VIDEO",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20gonder.png",         aspect: "aspect-video"   },
+  { id: 6,  title: "AFAR",              category: "DOCUMENTARY",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20afar.png",           aspect: "aspect-video"   },
+  { id: 7,  title: "SAHLWEQE",          category: "COMMERCIAL",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20sahlweqe.png",       aspect: "aspect-video"   },
+  { id: 8,  title: "YANCHI",            category: "SHORT-FORM",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20yanchi.png",         aspect: "aspect-video"   },
+  { id: 9,  title: "SERIES 01",         category: "MOTION GFX",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit1.png",                 aspect: "aspect-video"   },
+  { id: 10, title: "SAHLDEWERQ",        category: "MUSIC VIDEO",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamsahldewerq.png",            aspect: "aspect-video"   },
 ];
 
 export const Works: React.FC = () => {
@@ -72,11 +77,11 @@ export const Works: React.FC = () => {
                 data-cursor-text="PLAY"
                 className={`relative group overflow-hidden rounded-md border border-white/5 bg-[#0a0a0a] ${activeFilter === "ALL" ? project.span : 'col-span-1 row-span-1 aspect-video'} ${project.aspect === 'aspect-[9/16]' && activeFilter === "ALL" ? 'h-[600px]' : 'h-full min-h-[300px]'}`}
               >
-                {/* Image/Video Placeholder */}
-                <img 
-                  src={project.videoUrl} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-300 ease-in-out"
+                {/* Project Image */}
+                <img
+                  src={project.videoUrl}
+                  alt={project.title}
+                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-in-out"
                 />
                 
                 {/* Permanent Vignette Overlay for Readability */}
