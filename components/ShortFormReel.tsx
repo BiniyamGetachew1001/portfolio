@@ -64,8 +64,7 @@ const VIDEO_NAMES = [
 const ROW_A = VIDEO_NAMES.slice(0, 28);
 const ROW_B = VIDEO_NAMES.slice(28);
 
-// In dev, serve from local public/reels/. In production, use the CDN.
-const CDN_BASE = (import.meta.env.VITE_REELS_CDN_URL ?? '/reels').replace(/\/$/, '');
+const CDN_BASE = 'https://res.cloudinary.com/dblwp7agu/video/upload/q_auto,vc_auto/reels';
 
 // --- Lightbox Modal ---
 interface LightboxProps {
