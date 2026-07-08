@@ -31,99 +31,83 @@ interface GalleryItem {
 const galleryItems: GalleryItem[] = [
   {
     id: '01',
-    title: 'CYBERPUNK 2077: RUNNERS',
-    category: 'Cinematic Art',
-    categorySlug: 'cinematic-art',
-    description: 'Surgical design and multi-layered compositing for a cyberpunk cinematic key frame. Involves extreme high-range color grading, hand-drawn digital highlights, hyper-realistic neon light spill mapping, and customized typography architecture to maximize futuristic cinematic immersion.',
-    image: 'https://images.unsplash.com/photo-1515260268569-9271009adfdb?q=80&w=2070&auto=format&fit=crop',
-    beforeImage: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=2000&auto=format&fit=crop',
-    software: ['Adobe Photoshop', 'Wacom Tablet', 'Nik Collection'],
-    resolution: '7680 x 4320 // 8K DCI',
-    layers: '240+ Active Groups',
-    client: 'Cyberpunk Fansite Core',
-    code: 'KEY.CP2077',
-    accent: '#a855f7', // Violet
-    bgGlow: 'rgba(168, 85, 247, 0.15)'
+    title: 'FORENSIC PSYCHOLOGY: WORST OFFENDERS',
+    category: 'YouTube Thumbnails',
+    categorySlug: 'thumbnails',
+    description: 'High-impact true-crime YouTube thumbnail built around a shattered, torn-paper collage system. A grayscale portrait of the show’s forensic psychologist is fractured into four duotone case-file panels — sepia, chrome-green, and blood-crimson — each spotlighting a distressed child subject to dramatize the episode’s investigative subject matter, anchored by bold slab-serif typography engineered for maximum click-through at thumbnail scale.',
+    image: '/graphics/forensic-psychology-worst-offenders.jpeg',
+    beforeImage: '/graphics/forensic-psychology-worst-offenders.jpeg',
+    software: ['Adobe Photoshop', 'Topaz Gigapixel AI', 'Adobe Lightroom'],
+    resolution: '1360 x 768 // HD Thumbnail',
+    layers: '60+ Collage Layers',
+    client: 'Dr. Jeff — Forensic Psychology',
+    code: 'YT.FRN-01',
+    accent: '#dc2626', // Red
+    bgGlow: 'rgba(220, 38, 38, 0.15)'
   },
   {
     id: '02',
-    title: 'THE OVERKILL PODCAST',
-    category: 'YouTube Thumbnails',
-    categorySlug: 'thumbnails',
-    description: 'High-clickrate thumbnail architecture engineered for ultra-high audience retention and premium positioning. Combines custom metallic 3D titles, subject face-contour edge lighting, volumetric flare filters, and surgically enhanced saturation layers designed for visual dominance on mobile and desktop screens.',
-    image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop',
-    beforeImage: 'https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?q=80&w=1974&auto=format&fit=crop',
-    software: ['Photoshop', 'Cinema 4D', 'Redshift Engine'],
-    resolution: '3840 x 2160 // 4K UHD',
-    layers: '115+ Layers',
-    client: 'Overkill Media Group',
-    code: 'YT.OVK-09',
-    accent: '#ec4899', // Pink
-    bgGlow: 'rgba(236, 72, 153, 0.15)'
+    title: 'WAAN OFII: FARM TO DOOR',
+    category: 'Branding & Vector',
+    categorySlug: 'branding',
+    description: 'Full-scene poster campaign for a regional dairy delivery brand, blending believable 3D product renders — a dew-cooled glass milk bottle, a woven crate stacked with cheese wheels and cottage cheese, a crate of eggs — into a golden-hour mountain pasture backdrop. A cow mid-lick and a free-range hen ground the composition in an authentic farm narrative, while a bilingual Oromo/Amharic headline and scooter-delivery iconography drive the direct-response call to action.',
+    image: '/graphics/waan-ofii-farm-to-door-after.png',
+    beforeImage: '/graphics/waan-ofii-farm-to-door-before.png',
+    software: ['Adobe Photoshop', 'Adobe Illustrator', 'Cinema 4D'],
+    resolution: '1792 x 2400 // Print-Ready Poster',
+    layers: '150+ Composite Layers',
+    client: 'Waan Ofii Dairy Shop',
+    code: 'BRD.WFI-02',
+    accent: '#eab308', // Gold
+    bgGlow: 'rgba(234, 179, 8, 0.15)'
   },
   {
     id: '03',
-    title: 'CHRONOS: TEMPORAL SYSTEMS',
+    title: 'WAAN OFII: PREMIUM DAIRY SHOP',
     category: 'Branding & Vector',
     categorySlug: 'branding',
-    description: 'Full corporate brand guidelines and typography identity structure designed for an elite timepiece manufacturer. Sculpting pure vector architecture, customized geometric lettering, ultra-clean negative space usage, and dark-obsidian brand mockup layouts that communicate high-end technical superiority.',
-    image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=2070&auto=format&fit=crop',
-    beforeImage: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=2021&auto=format&fit=crop',
-    software: ['Adobe Illustrator', 'Adobe Photoshop', 'Figma'],
-    resolution: 'Vector // Infinitely Scalable',
-    layers: '100% Scalable Paths',
-    client: 'Chronos Watches',
-    code: 'BRD.CHR-01',
-    accent: '#06b6d4', // Cyan
-    bgGlow: 'rgba(6, 182, 212, 0.15)'
+    description: 'Compact social-ad banner distilling the Waan Ofii dairy brand into a single hero shot: a chilled milk bottle wrapped in a slow-motion milk ribbon, suspended alongside tumbling eggs and cheese wedges against a sun-warmed field backdrop. A custom gold script wordmark and "Premium Dairy Shop" subline establish packaging-level brand polish for use across Facebook and Telegram promotions.',
+    image: '/graphics/waan-ofii-premium-banner-after.jpg',
+    beforeImage: '/graphics/waan-ofii-premium-banner-before.jpg',
+    software: ['Adobe Photoshop', 'Adobe Illustrator', 'Cinema 4D'],
+    resolution: '1280 x 858 // Social Banner',
+    layers: '90+ Composite Layers',
+    client: 'Waan Ofii Dairy Shop',
+    code: 'BRD.WFI-03',
+    accent: '#65a30d', // Olive Green
+    bgGlow: 'rgba(101, 163, 13, 0.15)'
   },
   {
     id: '04',
-    title: 'MOTION INTERFACE PROTOCOL',
-    category: 'Motion Assets',
-    categorySlug: 'motion-assets',
-    description: 'Custom head-up display overlay packages and digital telemetry assets for video production pipelines. Comprises interactive dashboard grids, procedural vector lines, loading meters, and retro-futuristic sound wave HUD overlays designed to quickly overlay onto cinematic videos.',
-    image: 'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=2070&auto=format&fit=crop',
-    beforeImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop',
-    software: ['Adobe After Effects', 'Illustrator', 'Cinema 4D'],
-    resolution: '3840 x 2160 // 60 FPS Asset',
-    layers: 'Procedural Vectors',
-    client: 'Video Creators Market',
-    code: 'MOT.HUD-04',
-    accent: '#10b981', // Emerald
-    bgGlow: 'rgba(16, 185, 129, 0.15)'
+    title: 'WAAN OFII: NATURAL DAIRY PRODUCTS',
+    category: 'Branding & Vector',
+    categorySlug: 'branding',
+    description: 'Vertical product-education poster anchoring the Waan Ofii dairy brand in an idyllic grazing-pasture backdrop. A frosted-glass bilingual product ledger floats above a foreground still-life of milk jugs, farmhouse cheese, cultured yogurt, and a nesting hen forming a heart with her wings over a fresh egg carton — a warm, farm-authentic sales sheet built for in-store print and social carousel use.',
+    image: '/graphics/waan-ofii-natural-products-after.png',
+    beforeImage: '/graphics/waan-ofii-natural-products-before.jpg',
+    software: ['Adobe Photoshop', 'Adobe Illustrator', 'Cinema 4D'],
+    resolution: '896 x 1200 // Print-Ready Poster',
+    layers: '110+ Composite Layers',
+    client: 'Waan Ofii Dairy Shop',
+    code: 'BRD.WFI-04',
+    accent: '#0ea5e9', // Sky Blue
+    bgGlow: 'rgba(14, 165, 233, 0.15)'
   },
   {
     id: '05',
-    title: 'NIGHTFALL: MOVIE KEY ART',
-    category: 'Cinematic Art',
-    categorySlug: 'cinematic-art',
-    description: 'Official promotional theatrical key art for a moody independent mystery film. Heavy emphasis on matte painting workflows, combining multiple atmospheric raw photographs of skies, forests, and cabins into a single high-contrast cinematic masterpiece under a digitally synthesized milky way.',
-    image: 'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=2070&auto=format&fit=crop',
-    beforeImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop',
-    software: ['Adobe Photoshop', 'Lightroom', 'Wacom Intuos Pro'],
-    resolution: '5400 x 8100 // 300 DPI Print',
-    layers: '180+ Active Composites',
-    client: 'Starlight Pictures',
-    code: 'KEY.NIGHT',
-    accent: '#f59e0b', // Amber
-    bgGlow: 'rgba(245, 158, 11, 0.15)'
-  },
-  {
-    id: '06',
-    title: 'ECLIPSE ESPORTS SYSTEM',
+    title: 'WAAN OFII: HERO CAMPAIGN BANNER',
     category: 'Branding & Vector',
     categorySlug: 'branding',
-    description: 'Comprehensive branding visual reboot for a competitive electronic sports league. Formulating energetic graphic design guidelines, aggressive custom vector mascot marks, screen-ready merchandise designs, and dynamic social media graphic panels optimized for immediate attention and brand loyalty.',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop',
-    beforeImage: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop',
-    software: ['Adobe Illustrator', 'Photoshop', 'C4D Lite'],
-    resolution: 'Various Retina Formats',
-    layers: '100% Scalable Vector',
-    client: 'Eclipse Esports Team',
-    code: 'BRD.ECL-06',
-    accent: '#f43f5e', // Rose
-    bgGlow: 'rgba(244, 63, 94, 0.15)'
+    description: 'Landscape hero banner built for the Waan Ofii homepage and ad placements. A cursive gold script wordmark pairs with a soft-focus pasture cameo, while a signature milk-tornado — lifting the branded bottle, cracked eggs, and aged cheese wedges — anchors the right half against a warm bokeh sunset, establishing the visual signature reused across the brand’s poster and banner family.',
+    image: '/graphics/waan-ofii-hero-banner-after.png',
+    beforeImage: '/graphics/waan-ofii-hero-banner-before.png',
+    software: ['Adobe Photoshop', 'Adobe Illustrator', 'Cinema 4D'],
+    resolution: '2528 x 1696 // Wide Hero Banner',
+    layers: '130+ Composite Layers',
+    client: 'Waan Ofii Dairy Shop',
+    code: 'BRD.WFI-05',
+    accent: '#f59e0b', // Amber
+    bgGlow: 'rgba(245, 158, 11, 0.15)'
   }
 ];
 
@@ -253,10 +237,8 @@ export default function GalleryApp() {
 
   const categories = [
     { name: 'ALL LABS', slug: 'all', icon: LayoutGrid },
-    { name: 'CINEMATIC KEY ART', slug: 'cinematic-art', icon: Film },
     { name: 'YOUTUBE THUMBNAILS', slug: 'thumbnails', icon: Monitor },
-    { name: 'BRANDING & VECTOR', slug: 'branding', icon: Paintbrush },
-    { name: 'MOTION GRAPHICS', slug: 'motion-assets', icon: Cpu }
+    { name: 'BRANDING & VECTOR', slug: 'branding', icon: Paintbrush }
   ];
 
   return (
@@ -522,9 +504,9 @@ export default function GalleryApp() {
 
               {/* Slider View Right */}
               <div className="lg:col-span-7 aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative">
-                <BeforeAfterSlider 
-                  before="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=2070&auto=format&fit=crop"
-                  after="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop"
+                <BeforeAfterSlider
+                  before="/graphics/waan-ofii-farm-to-door-before.png"
+                  after="/graphics/waan-ofii-farm-to-door-after.png"
                 />
               </div>
 
