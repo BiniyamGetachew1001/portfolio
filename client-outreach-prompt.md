@@ -8,7 +8,7 @@ Busy professionals, entrepreneurs, coaches, consultants, or business owners who:
 - Don't have time to edit, upload, or manage content themselves
 
 ---
-
+    
 ## AI Prompt — Finding & Messaging Target Clients
 
 Use this prompt in ChatGPT, Claude, or any AI outreach tool:
