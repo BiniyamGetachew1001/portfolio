@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Play } from 'lucide-react';
+import showrealVideo from '../video/showreal.mp4';
 
 export const Showreel: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -39,13 +40,13 @@ export const Showreel: React.FC = () => {
 
           <video 
             className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+            autoPlay
             loop
             muted
             playsInline
-            // Placeholder showreel
-            poster="https://picsum.photos/1920/1080?grayscale"
+            preload="metadata"
           >
-             <source src="https://videos.pexels.com/video-files/3205915/3205915-hd_1920_1080_25fps.mp4" type="video/mp4" />
+            <source src={showrealVideo} type="video/mp4" />
           </video>
           
           {/* Custom minimal controls UI simulation */}
