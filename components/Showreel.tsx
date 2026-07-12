@@ -1,11 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { Play, Pause } from 'lucide-react';
 import showrealVideo from '../video/showreal.mp4';
 
 export const Showreel: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
   const isInView = useInView(containerRef, { amount: 0.5 });
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   return (
     <section ref={containerRef} className="relative w-full h-[80vh] md:h-screen flex items-center justify-center bg-black py-20">
@@ -29,16 +42,24 @@ export const Showreel: React.FC = () => {
           className="relative aspect-video w-full bg-[#0a0a0a] border border-white/10 rounded-lg overflow-hidden group cursor-pointer"
         >
           {/* Overlay Play Button */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-all duration-500 z-20">
+          <div 
+            className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-all duration-500 z-20"
+            onClick={handlePlayPause}
+          >
             <motion.div 
               whileHover={{ scale: 1.1 }}
               className="w-20 h-20 rounded-full border border-white/30 backdrop-blur-md flex items-center justify-center bg-white/5"
             >
-              <Play className="fill-white text-white ml-1" size={24} />
+              {isPlaying ? (
+                <Pause className="fill-white text-white" size={24} />
+              ) : (
+                <Play className="fill-white text-white ml-1" size={24} />
+              )}
             </motion.div>
           </div>
 
           <video 
+            ref={videoRef}
             className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
             autoPlay
             loop
