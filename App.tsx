@@ -66,8 +66,8 @@ export default function App() {
           {/* 6. The Connection (The Architect) - Moved before Workflow */}
           <About />
 
-          {/* 7. The Trust (Workflow Architecture) */}
-          <Process />
+          {/* 7. The Trust (Workflow Architecture) - COMMENTED OUT */}
+          {/* <Process /> */}
 
           {/* 8. The Engagement Models (How to Hire) */}
           <Engagement />
