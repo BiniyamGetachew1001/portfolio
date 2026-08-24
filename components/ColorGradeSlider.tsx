@@ -130,7 +130,7 @@ const MotionGrid = () => {
                 <div key={item.id} className="group relative aspect-[9/16] md:aspect-square lg:aspect-[4/3] bg-[#0a0a0a] rounded-lg overflow-hidden border border-white/5 hover:border-violet-500/50 transition-colors">
                     <video 
                         src={item.video}
-                        autoPlay muted loop playsInline
+                        autoPlay muted loop playsInline preload="metadata"
                         className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90" />
@@ -159,7 +159,7 @@ const VfxBreakdown = () => {
              <div className="relative w-full aspect-video bg-[#0a0a0a] rounded-lg overflow-hidden border border-white/10 group">
                 <video 
                     src="https://videos.pexels.com/video-files/6575193/6575193-hd_1920_1080_30fps.mp4"
-                    autoPlay muted loop playsInline
+                    autoPlay muted loop playsInline preload="metadata"
                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500"
                 />
                 

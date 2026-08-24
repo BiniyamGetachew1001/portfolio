@@ -27,6 +27,7 @@ export const Navbar: React.FC = () => {
           <a href="/pricing.html" className="hover:text-white transition-colors">PRICING</a>
           <a href={isHomePage ? "#services" : "/#services"} className="hover:text-white transition-colors">SERVICES</a>
           <a href={isHomePage ? "#about" : "/#about"} className="hover:text-white transition-colors">ABOUT</a>
+          <a href="/biniyam_cv.html" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 font-semibold transition-colors">CV / RESUME</a>
         </div>
 
         <a href={isHomePage ? "#contact" : "/#contact"} className="bg-white text-black font-bold font-mono text-xs px-4 py-2 rounded-full hover:bg-gray-200 transition-colors">

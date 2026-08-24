@@ -33,7 +33,7 @@ const clips: Clip[] = Object.entries(videoModules)
     color: clipColors[index % clipColors.length],
   }));
 
-const VerticalFrame = ({ clip, onSelect }: { clip: Clip; onSelect: (clip: Clip) => void }) => {
+const VerticalFrame = ({ clip, onSelect }: { clip: Clip; onSelect: (clip: Clip) => void; key?: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const playHoverPreview = async () => {

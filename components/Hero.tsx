@@ -46,7 +46,7 @@ export const Hero: React.FC = () => {
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.2, duration: 0.8 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
           className="mt-6 font-mono text-gray-400 text-xs md:text-base max-w-lg mx-auto"
         >
           BINIYAM EDITS. HIGH-IMPACT STORYTELLING FOR BRANDS & CREATORS.
@@ -57,12 +57,15 @@ export const Hero: React.FC = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.5 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
         className="absolute bottom-16 z-30 flex flex-col items-center gap-6"
       >
         <button 
           data-cursor-text="WATCH"
-          className="group relative flex items-center gap-3 px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/20 rounded-full hover:bg-white/10 hover:border-white/40 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300"
+          onClick={() => {
+            window.scrollTo({ top: window.innerHeight * 0.85, behavior: 'smooth' });
+          }}
+          className="group relative flex items-center gap-3 px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/20 rounded-full hover:bg-white/10 hover:border-white/40 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-300 cursor-pointer"
         >
           <span className="font-mono text-xs font-bold tracking-widest text-white">WATCH REEL</span>
           <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black group-hover:scale-110 transition-transform">

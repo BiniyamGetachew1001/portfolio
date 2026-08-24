@@ -22,7 +22,7 @@ import {
   Layers,
   Download
 } from 'lucide-react';
-import aboutImage from './images/portfolio_profile_picture.png';
+import aboutImage from './images/portfolio_profile_picture.webp';
 
 // ============================================
 // TYPES

@@ -14,16 +14,16 @@ interface Project {
 const categories = ["ALL", "COMMERCIAL", "SHORT-FORM", "DOCUMENTARY", "MUSIC VIDEO", "MOTION GFX"];
 
 const projects: Project[] = [
-  { id: 1,  title: "MOVE",              category: "COMMERCIAL",   span: "md:col-span-2 md:row-span-2", videoUrl: "/works/biniyamedit%20move.png",          aspect: "aspect-video"   },
-  { id: 2,  title: "HABESHA GIRLS",     category: "SHORT-FORM",   span: "md:col-span-1 md:row-span-2", videoUrl: "/works/biniyamedit%20habesha%20girls.png", aspect: "aspect-[9/16]" },
-  { id: 3,  title: "AKSUM",             category: "DOCUMENTARY",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20Aksum.png",          aspect: "aspect-square"  },
-  { id: 4,  title: "CHIMBLE",           category: "MOTION GFX",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/chimble.png",                      aspect: "aspect-square"  },
-  { id: 5,  title: "GONDER",            category: "MUSIC VIDEO",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20gonder.png",         aspect: "aspect-video"   },
-  { id: 6,  title: "AFAR",              category: "DOCUMENTARY",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20afar.png",           aspect: "aspect-video"   },
-  { id: 7,  title: "SAHLWEQE",          category: "COMMERCIAL",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20sahlweqe.png",       aspect: "aspect-video"   },
-  { id: 8,  title: "YANCHI",            category: "SHORT-FORM",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20yanchi.png",         aspect: "aspect-video"   },
-  { id: 9,  title: "SERIES 01",         category: "MOTION GFX",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit1.png",                 aspect: "aspect-video"   },
-  { id: 10, title: "SAHLDEWERQ",        category: "MUSIC VIDEO",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamsahldewerq.png",            aspect: "aspect-video"   },
+  { id: 1,  title: "MOVE",              category: "COMMERCIAL",   span: "md:col-span-2 md:row-span-2", videoUrl: "/works/biniyamedit%20move.webp",          aspect: "aspect-video"   },
+  { id: 2,  title: "HABESHA GIRLS",     category: "SHORT-FORM",   span: "md:col-span-1 md:row-span-2", videoUrl: "/works/biniyamedit%20habesha%20girls.webp", aspect: "aspect-[9/16]" },
+  { id: 3,  title: "AKSUM",             category: "DOCUMENTARY",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20Aksum.webp",          aspect: "aspect-square"  },
+  { id: 4,  title: "CHIMBLE",           category: "MOTION GFX",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/chimble.webp",                      aspect: "aspect-square"  },
+  { id: 5,  title: "GONDER",            category: "MUSIC VIDEO",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20gonder.webp",         aspect: "aspect-video"   },
+  { id: 6,  title: "AFAR",              category: "DOCUMENTARY",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20afar.webp",           aspect: "aspect-video"   },
+  { id: 7,  title: "SAHLWEQE",          category: "COMMERCIAL",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20sahlweqe.webp",       aspect: "aspect-video"   },
+  { id: 8,  title: "YANCHI",            category: "SHORT-FORM",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit%20yanchi.webp",         aspect: "aspect-video"   },
+  { id: 9,  title: "SERIES 01",         category: "MOTION GFX",   span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamedit1.webp",                 aspect: "aspect-video"   },
+  { id: 10, title: "SAHLDEWERQ",        category: "MUSIC VIDEO",  span: "md:col-span-1 md:row-span-1", videoUrl: "/works/biniyamsahldewerq.webp",            aspect: "aspect-video"   },
 ];
 
 export const Works: React.FC = () => {
@@ -81,6 +81,8 @@ export const Works: React.FC = () => {
                 <img
                   src={project.videoUrl}
                   alt={project.title}
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-500 ease-in-out"
                 />
                 

@@ -64,7 +64,8 @@ const VIDEO_NAMES = [
 const ROW_A = VIDEO_NAMES.slice(0, 28);
 const ROW_B = VIDEO_NAMES.slice(28);
 
-const CDN_BASE = 'https://res.cloudinary.com/dblwp7agu/video/upload/q_auto,vc_auto/reels';
+const getPosterUrl = (name: string) => `/reels/posters/${encodeURIComponent(name.replace(/\.mp4$/i, ''))}.webp`;
+const getVideoUrl = (name: string) => `/reels/videos/${encodeURIComponent(name)}`;
 
 // --- Lightbox Modal ---
 interface LightboxProps {
@@ -135,7 +136,7 @@ const Lightbox: React.FC<LightboxProps> = ({ src, onClose }) => {
         >
           <video
             ref={videoRef}
-            src={`${CDN_BASE}/${encodeURIComponent(src)}`}
+            src={getVideoUrl(src)}
             controls
             playsInline
             loop
@@ -163,32 +164,16 @@ interface VideoCardProps {
 }
 
 const VideoCard: React.FC<VideoCardProps> = ({ src, index, onOpen }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
-  // Intersection Observer — only play when visible in viewport
-  useEffect(() => {
-    const el = videoRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.play().catch(() => {});
-        } else {
-          el.pause();
-        }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  // Local WebP poster thumbnail (instant loading, ~6KB each)
+  const posterUrl = getPosterUrl(src);
+  const videoUrl = getVideoUrl(src);
 
   return (
     <div
-      ref={cardRef}
-      className="relative flex-shrink-0 w-[160px] sm:w-[180px] md:w-[200px] rounded-xl overflow-hidden cursor-pointer"
+      className="relative flex-shrink-0 w-[160px] sm:w-[180px] md:w-[200px] rounded-xl overflow-hidden cursor-pointer bg-[#0c0c0c]"
       style={{ aspectRatio: '9/16' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -213,7 +198,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ src, index, onOpen }) => {
         }}
       />
 
-      {/* Clip number (always visible, fades on hover) */}
+      {/* Clip number */}
       <div
         className="absolute top-2 left-2 z-20 pointer-events-none transition-opacity duration-200"
         style={{ opacity: hovered ? 0 : 0.4 }}
@@ -244,16 +229,29 @@ const VideoCard: React.FC<VideoCardProps> = ({ src, index, onOpen }) => {
         )}
       </AnimatePresence>
 
-      <video
-        ref={videoRef}
-        src={`${CDN_BASE}/${encodeURIComponent(src)}`}
-        muted
-        playsInline
-        loop
-        preload="metadata"
-        className="w-full h-full object-cover transition-transform duration-500"
-        style={{ transform: hovered ? 'scale(1.04)' : 'scale(1)' }}
+      {/* Poster image */}
+      <img
+        src={posterUrl}
+        alt={`Reel ${index + 1}`}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setImgLoaded(true)}
+        className={`w-full h-full object-cover transition-all duration-500 ${
+          imgLoaded ? 'opacity-90' : 'opacity-0'
+        } ${hovered ? 'scale-105' : 'scale-100'}`}
       />
+
+      {/* On-demand video streaming only when hovered */}
+      {hovered && (
+        <video
+          src={videoUrl}
+          muted
+          playsInline
+          autoPlay
+          loop
+          className="absolute inset-0 w-full h-full object-cover z-[5]"
+        />
+      )}
     </div>
   );
 };

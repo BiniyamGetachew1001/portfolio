@@ -1,0 +1,29 @@
+# Vercel Ignore File
+# Exclude heavy assets, local environment files, and broken junctions/symlinks from Vercel deployments.
+
+# Local reels folder (symlink/junction) which causes build failure on Vercel
+public/reels
+public/reels/
+Glowing Motion Graphics Reels Bundle-20260412T121753Z-3-002
+
+# Standard ignores
+.git
+.github
+node_modules
+dist
+dist-ssr
+*.local
+.vercel
+.vscode
+
+# Local config & data files
+*.xlsx
+*.md
+*.html
+*.py
+*.mjs
+*.log
+.env*
+!index.html
+!pricing.html
+!gallery.html

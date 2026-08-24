@@ -21,12 +21,11 @@ import { ShortFormReel } from './components/ShortFormReel';
 export default function App() {
   const [loading, setLoading] = useState(true);
 
-  // Sync loading state with the preloader duration + animation buffer
+  // Fast, instant entry animation without blocking user
   useEffect(() => {
-    // 2000ms count + 200ms pause + 800ms curtain transition buffer
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 600);
     return () => clearTimeout(timer);
   }, []);
 

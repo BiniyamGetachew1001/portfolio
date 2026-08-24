@@ -6,8 +6,8 @@ export const Preloader: React.FC = () => {
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    const duration = 2000; // 2 seconds
-    const intervalTime = 20;
+    const duration = 350; // 350ms snappy intro
+    const intervalTime = 15;
     const steps = duration / intervalTime;
     const increment = 100 / steps;
 
@@ -16,7 +16,7 @@ export const Preloader: React.FC = () => {
         const next = prev + increment;
         if (next >= 100) {
           clearInterval(interval);
-          setTimeout(() => setIsComplete(true), 200); // Slight pause at 100%
+          setTimeout(() => setIsComplete(true), 50);
           return 100;
         }
         return next;
